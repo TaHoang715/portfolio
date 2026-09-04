@@ -12,7 +12,6 @@ import { Certifications } from './components/Certifications';
 import { Profiles } from './components/Profiles';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
-import { ThemeWidget } from './components/ThemeWidget';
 
 export const App: React.FC = () => {
   return (
@@ -38,9 +37,6 @@ export const App: React.FC = () => {
         <Profiles />
         <Contact />
         <Footer />
-
-        {/* Live Theme & Language Controller Widget */}
-        <ThemeWidget />
       </div>
     </PortfolioProvider>
   );

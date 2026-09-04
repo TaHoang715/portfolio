@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { usePortfolio } from '../context/PortfolioContext';
 
 export const BackgroundCanvas: React.FC = () => {
-  const { bgMode } = usePortfolio();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
 
@@ -11,13 +9,18 @@ export const BackgroundCanvas: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // 1. Three.js Scene & Camera Setup
     const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x07090e, 0.018);
+
     const camera = new THREE.PerspectiveCamera(
-      65,
+      60,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
+    camera.position.set(0, 16, 42);
+    camera.lookAt(0, -2, 0);
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
@@ -27,8 +30,8 @@ export const BackgroundCanvas: React.FC = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Circular glowing star texture helper
-    const createCircleTexture = (colorStop: string) => {
+    // 2. High-res Glowing Point Sprite Texture
+    const createParticleTexture = () => {
       const texCanvas = document.createElement('canvas');
       texCanvas.width = 64;
       texCanvas.height = 64;
@@ -36,8 +39,9 @@ export const BackgroundCanvas: React.FC = () => {
       if (ctx) {
         const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 30);
         grad.addColorStop(0, '#ffffff');
-        grad.addColorStop(0.3, colorStop);
-        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        grad.addColorStop(0.2, 'rgba(0, 242, 254, 0.95)');
+        grad.addColorStop(0.55, 'rgba(14, 165, 233, 0.4)');
+        grad.addColorStop(1, 'rgba(0, 242, 254, 0)');
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(32, 32, 30, 0, Math.PI * 2);
@@ -46,312 +50,179 @@ export const BackgroundCanvas: React.FC = () => {
       return new THREE.CanvasTexture(texCanvas);
     };
 
-    let cleanup = () => {};
+    const particleTexture = createParticleTexture();
 
-    // ──────────────────────────────────────────────
-    // MODE 1 & 2: CONSTELLATION & AURORA
-    // ──────────────────────────────────────────────
-    if (bgMode === 'constellation' || bgMode === 'aurora') {
-      const particleCount = bgMode === 'constellation' ? 180 : 120;
-      const maxDistance = bgMode === 'constellation' ? 14 : 11;
-      const positions = new Float32Array(particleCount * 3);
-      const velocities: { x: number; y: number; z: number }[] = [];
+    // 3. Cyber Wave Particle Mesh (65 x 65 Grid)
+    const AMOUNTX = 65;
+    const AMOUNTY = 65;
+    const SEPARATION = 2.4;
+    const numParticles = AMOUNTX * AMOUNTY;
 
-      for (let i = 0; i < particleCount; i++) {
-        positions[i * 3] = (Math.random() - 0.5) * 80;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 60;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 40;
+    const positions = new Float32Array(numParticles * 3);
+    const colors = new Float32Array(numParticles * 3);
 
-        velocities.push({
-          x: (Math.random() - 0.5) * 0.025,
-          y: (Math.random() - 0.5) * 0.025,
-          z: (Math.random() - 0.5) * 0.015,
-        });
+    let idx = 0;
+    for (let ix = 0; ix < AMOUNTX; ix++) {
+      for (let iy = 0; iy < AMOUNTY; iy++) {
+        // Initial Grid Layout centered at origin
+        positions[idx] = (ix - AMOUNTX / 2) * SEPARATION;
+        positions[idx + 1] = 0;
+        positions[idx + 2] = (iy - AMOUNTY / 2) * SEPARATION;
+
+        // Base color (electric cyan / deep azure)
+        colors[idx] = 0.0;
+        colors[idx + 1] = 0.85;
+        colors[idx + 2] = 1.0;
+
+        idx += 3;
       }
-
-      const particlesGeom = new THREE.BufferGeometry();
-      particlesGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-      const particlesMat = new THREE.PointsMaterial({
-        color: 0x00f2fe,
-        size: bgMode === 'constellation' ? 0.75 : 0.6,
-        map: createCircleTexture('rgba(0, 242, 254, 0.8)'),
-        transparent: true,
-        opacity: 0.9,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-
-      const particleSystem = new THREE.Points(particlesGeom, particlesMat);
-      scene.add(particleSystem);
-
-      // Deep celestial dust
-      const dustCount = 800;
-      const dustPositions = new Float32Array(dustCount * 3);
-      for (let i = 0; i < dustCount * 3; i++) {
-        dustPositions[i] = (Math.random() - 0.5) * 160;
-      }
-      const dustGeom = new THREE.BufferGeometry();
-      dustGeom.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
-      const dustMat = new THREE.PointsMaterial({
-        color: 0x93c5fd,
-        size: 0.25,
-        transparent: true,
-        opacity: 0.5,
-        depthWrite: false,
-      });
-      const dustSystem = new THREE.Points(dustGeom, dustMat);
-      scene.add(dustSystem);
-
-      // Lines
-      const maxLineSegments = particleCount * particleCount;
-      const linePositions = new Float32Array(maxLineSegments * 6);
-      const lineColors = new Float32Array(maxLineSegments * 6);
-      const linesGeom = new THREE.BufferGeometry();
-      linesGeom.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-      linesGeom.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
-      const linesMat = new THREE.LineSegments(
-        linesGeom,
-        new THREE.LineBasicMaterial({
-          vertexColors: true,
-          transparent: true,
-          blending: THREE.AdditiveBlending,
-          depthWrite: false,
-        })
-      );
-      scene.add(linesMat);
-
-      camera.position.z = 32;
-
-      let mouseX = 0;
-      let mouseY = 0;
-      let targetX = 0;
-      let targetY = 0;
-
-      const onMouseMove = (e: MouseEvent) => {
-        targetX = (e.clientX / window.innerWidth - 0.5) * 3.5;
-        targetY = -(e.clientY / window.innerHeight - 0.5) * 3.5;
-        if (spotlightRef.current) {
-          spotlightRef.current.style.setProperty('--spotlight-x', `${e.clientX}px`);
-          spotlightRef.current.style.setProperty('--spotlight-y', `${e.clientY}px`);
-        }
-      };
-      window.addEventListener('mousemove', onMouseMove);
-
-      let animId: number;
-      const animate = () => {
-        mouseX += (targetX - mouseX) * 0.05;
-        mouseY += (targetY - mouseY) * 0.05;
-        camera.position.x = mouseX * 2;
-        camera.position.y = mouseY * 2;
-        camera.lookAt(scene.position);
-
-        dustSystem.rotation.y += 0.0002;
-
-        const pos = particlesGeom.attributes.position.array as Float32Array;
-        for (let i = 0; i < particleCount; i++) {
-          pos[i * 3] += velocities[i].x;
-          pos[i * 3 + 1] += velocities[i].y;
-          pos[i * 3 + 2] += velocities[i].z;
-
-          if (pos[i * 3] < -40 || pos[i * 3] > 40) velocities[i].x *= -1;
-          if (pos[i * 3 + 1] < -30 || pos[i * 3 + 1] > 30) velocities[i].y *= -1;
-          if (pos[i * 3 + 2] < -20 || pos[i * 3 + 2] > 20) velocities[i].z *= -1;
-        }
-        particlesGeom.attributes.position.needsUpdate = true;
-
-        let lineIdx = 0;
-        for (let i = 0; i < particleCount; i++) {
-          for (let j = i + 1; j < particleCount; j++) {
-            const dx = pos[i * 3] - pos[j * 3];
-            const dy = pos[i * 3 + 1] - pos[j * 3 + 1];
-            const dz = pos[i * 3 + 2] - pos[j * 3 + 2];
-            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            if (dist < maxDistance) {
-              const alpha = 1.0 - dist / maxDistance;
-              linePositions[lineIdx * 3] = pos[i * 3];
-              linePositions[lineIdx * 3 + 1] = pos[i * 3 + 1];
-              linePositions[lineIdx * 3 + 2] = pos[i * 3 + 2];
-              lineColors[lineIdx * 3] = 0.0;
-              lineColors[lineIdx * 3 + 1] = 0.95 * alpha;
-              lineColors[lineIdx * 3 + 2] = 1.0 * alpha;
-              lineIdx++;
-
-              linePositions[lineIdx * 3] = pos[j * 3];
-              linePositions[lineIdx * 3 + 1] = pos[j * 3 + 1];
-              linePositions[lineIdx * 3 + 2] = pos[j * 3 + 2];
-              lineColors[lineIdx * 3] = 0.0;
-              lineColors[lineIdx * 3 + 1] = 0.95 * alpha;
-              lineColors[lineIdx * 3 + 2] = 1.0 * alpha;
-              lineIdx++;
-            }
-          }
-        }
-        linesGeom.setDrawRange(0, lineIdx);
-        linesGeom.attributes.position.needsUpdate = true;
-        linesGeom.attributes.color.needsUpdate = true;
-
-        renderer.render(scene, camera);
-        animId = requestAnimationFrame(animate);
-      };
-      animate();
-
-      cleanup = () => {
-        window.removeEventListener('mousemove', onMouseMove);
-        cancelAnimationFrame(animId);
-        particlesGeom.dispose();
-        particlesMat.dispose();
-        dustGeom.dispose();
-        dustMat.dispose();
-        linesGeom.dispose();
-        (linesMat.material as THREE.Material).dispose();
-      };
     }
-    // ──────────────────────────────────────────────
-    // MODE 3: CYBER MATRIX WAVE
-    // ──────────────────────────────────────────────
-    else if (bgMode === 'matrix') {
-      const SEPARATION = 3;
-      const AMOUNTX = 45;
-      const AMOUNTY = 45;
-      const numParticles = AMOUNTX * AMOUNTY;
 
-      const positions = new Float32Array(numParticles * 3);
-      const scales = new Float32Array(numParticles);
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-      let i = 0, j = 0;
+    const material = new THREE.PointsMaterial({
+      size: 0.65,
+      map: particleTexture,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.92,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+
+    const waveMesh = new THREE.Points(geometry, material);
+    waveMesh.position.y = -6;
+    waveMesh.rotation.x = 0.25; // Tilt forward for perspective depth
+    scene.add(waveMesh);
+
+    // 4. Subtle Distant Floating Dust for Spatial Atmosphere
+    const dustCount = 450;
+    const dustPositions = new Float32Array(dustCount * 3);
+    for (let i = 0; i < dustCount * 3; i++) {
+      dustPositions[i] = (Math.random() - 0.5) * 120;
+    }
+    const dustGeom = new THREE.BufferGeometry();
+    dustGeom.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+    const dustMat = new THREE.PointsMaterial({
+      color: 0x38bdf8,
+      size: 0.22,
+      transparent: true,
+      opacity: 0.45,
+      depthWrite: false,
+    });
+    const dustParticles = new THREE.Points(dustGeom, dustMat);
+    scene.add(dustParticles);
+
+    // 5. Mouse Interactivity & Smooth Camera Tracking
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const normX = e.clientX / window.innerWidth - 0.5;
+      const normY = -(e.clientY / window.innerHeight - 0.5);
+
+      targetX = normX * 8;
+      targetY = normY * 4;
+
+      if (spotlightRef.current) {
+        spotlightRef.current.style.setProperty('--spotlight-x', `${e.clientX}px`);
+        spotlightRef.current.style.setProperty('--spotlight-y', `${e.clientY}px`);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // 6. Animation Loop (Sine waves + Ripple equations)
+    let count = 0;
+    let animationFrameId: number;
+
+    const animate = () => {
+      // Damped camera parallax
+      mouseX += (targetX - mouseX) * 0.04;
+      mouseY += (targetY - mouseY) * 0.04;
+      camera.position.x = mouseX;
+      camera.position.y = 16 + mouseY * 0.8;
+      camera.lookAt(0, -3, 0);
+
+      dustParticles.rotation.y += 0.0003;
+
+      // Update Wave Grid Vertices & Dynamic Height-based Colors
+      const pos = geometry.attributes.position.array as Float32Array;
+      const col = geometry.attributes.color.array as Float32Array;
+
+      let pIdx = 0;
       for (let ix = 0; ix < AMOUNTX; ix++) {
         for (let iy = 0; iy < AMOUNTY; iy++) {
-          positions[i] = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
-          positions[i + 1] = 0;
-          positions[i + 2] = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
-          scales[j] = 1;
-          i += 3;
-          j++;
+          // Complex multi-frequency wave equation
+          const waveHeight =
+            Math.sin((ix + count) * 0.28) * 3.2 +
+            Math.sin((iy + count * 0.75) * 0.42) * 3.0 +
+            Math.cos((ix * 0.18 + iy * 0.18 + count * 0.6)) * 1.6;
+
+          pos[pIdx + 1] = waveHeight;
+
+          // Normalize height for luminous color ramp
+          const normalized = (waveHeight + 7.8) / 15.6; // ~0.0 to 1.0
+          const clamped = Math.max(0, Math.min(1, normalized));
+
+          // Crests (high): Glowing white-cyan; Valleys (low): Deep sapphire
+          col[pIdx] = clamped > 0.6 ? (clamped - 0.6) * 2.0 : 0.0; // Red (pure bright highlights)
+          col[pIdx + 1] = 0.5 + clamped * 0.5;                     // Green (cyan shine)
+          col[pIdx + 2] = 0.8 + clamped * 0.2;                     // Blue (deep electric base)
+
+          pIdx += 3;
         }
       }
 
-      const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.attributes.position.needsUpdate = true;
+      geometry.attributes.color.needsUpdate = true;
 
-      const material = new THREE.PointsMaterial({
-        color: 0x00f2fe,
-        size: 0.45,
-        map: createCircleTexture('rgba(0, 242, 254, 0.9)'),
-        transparent: true,
-        opacity: 0.75,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
+      count += 0.032; // Smooth, cinematic wave speed
 
-      const waveParticles = new THREE.Points(geometry, material);
-      waveParticles.position.y = -8;
-      waveParticles.rotation.x = 0.35;
-      scene.add(waveParticles);
+      renderer.render(scene, camera);
+      animationFrameId = requestAnimationFrame(animate);
+    };
 
-      camera.position.set(0, 15, 38);
-      camera.lookAt(0, -4, 0);
+    animate();
 
-      let count = 0;
-      let animId: number;
-      const animate = () => {
-        const pos = geometry.attributes.position.array as Float32Array;
-        let idx = 0;
-        for (let ix = 0; ix < AMOUNTX; ix++) {
-          for (let iy = 0; iy < AMOUNTY; iy++) {
-            pos[idx + 1] =
-              Math.sin((ix + count) * 0.3) * 2.5 + Math.sin((iy + count) * 0.4) * 2.5;
-            idx += 3;
-          }
-        }
-        geometry.attributes.position.needsUpdate = true;
-        count += 0.04;
-
-        renderer.render(scene, camera);
-        animId = requestAnimationFrame(animate);
-      };
-      animate();
-
-      cleanup = () => {
-        cancelAnimationFrame(animId);
-        geometry.dispose();
-        material.dispose();
-      };
-    }
-    // ──────────────────────────────────────────────
-    // MODE 4: MINIMAL OBSIDIAN
-    // ──────────────────────────────────────────────
-    else if (bgMode === 'minimal') {
-      const starCount = 400;
-      const positions = new Float32Array(starCount * 3);
-      for (let i = 0; i < starCount * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 120;
-      }
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const mat = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 0.15,
-        transparent: true,
-        opacity: 0.35,
-      });
-      const points = new THREE.Points(geom, mat);
-      scene.add(points);
-
-      camera.position.z = 25;
-
-      let animId: number;
-      const animate = () => {
-        points.rotation.y += 0.0001;
-        renderer.render(scene, camera);
-        animId = requestAnimationFrame(animate);
-      };
-      animate();
-
-      cleanup = () => {
-        cancelAnimationFrame(animId);
-        geom.dispose();
-        mat.dispose();
-      };
-    }
-
-    const onResize = () => {
+    const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
-    window.addEventListener('resize', onResize);
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      cleanup();
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
       renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+      dustGeom.dispose();
+      dustMat.dispose();
+      particleTexture.dispose();
     };
-  }, [bgMode]);
+  }, []);
 
   return (
     <>
-      {/* Aurora Orbs (Rendered during 'aurora' mode for maximum rich atmosphere) */}
-      {bgMode === 'aurora' && (
-        <div className="aurora-container" aria-hidden="true">
-          <div className="aurora-orb aurora-orb-1" />
-          <div className="aurora-orb aurora-orb-2" />
-          <div className="aurora-orb aurora-orb-3" />
-        </div>
-      )}
-
-      {/* Interactive Mouse Spotlight */}
+      {/* Ambient Top Glow & Spotlight */}
+      <div className="cyber-ambient-aura" aria-hidden="true" />
       <div ref={spotlightRef} className="mouse-spotlight" aria-hidden="true" />
 
-      {/* Three.js Canvas */}
+      {/* 3D Cyber Wave Mesh Canvas */}
       <div className="background-container">
         <canvas ref={canvasRef} id="bg-canvas" />
       </div>
 
-      {/* Subtle Coordinate Grid */}
-      <div className={`grid-overlay ${bgMode === 'minimal' ? 'grid-minimal' : ''}`} />
+      {/* Sleek coordinate grid overlay */}
+      <div className="grid-overlay" />
     </>
   );
 };
