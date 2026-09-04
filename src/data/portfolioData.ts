@@ -1,50 +1,43 @@
-export interface SkillItem {
-  name: string;
-  category: string;
-  color?: string;
-  bg?: string;
-}
-
 export interface SkillGroup {
   id: string;
   title: string;
   comment: string;
-  skills: { name: string; bg: string; color: string; icon?: string }[];
+  skills: { name: string; bg: string; color: string }[];
 }
 
 export interface ProjectItem {
   id: string;
+  number: string;
   title: string;
+  category: string;
   tagline: string;
   description: string;
   tags: string[];
   github?: string;
-  demo?: string;
-  status: 'active' | 'completed' | 'in_progress';
-  featured: boolean;
+  status: 'active' | 'in_progress';
   accentColor: string;
-  highlights: string[];
+  points: string[];
 }
 
-export interface ExperienceItem {
-  id: string;
-  period: string;
+export interface CareerItem {
+  number: string;
   role: string;
   company: string;
-  type: string;
-  description: string;
-  skills: string[];
+  period: string;
+  desc: string;
+  techs: string[];
 }
 
 export const PORTFOLIO_DATA = {
   personal: {
-    fullName: "Tạ Minh Hoàng",
+    greeting: "HELLO! I'M",
+    fullName: "TA MINH HOANG",
+    shortName: "Tạ Minh Hoàng",
     alias: "TaHoang715",
-    title: "Full-stack Software Engineer",
+    title: "FULL-STACK SOFTWARE ENGINEER",
     location: "Ho Chi Minh City, Vietnam",
-    bio: "Kỹ sư phần mềm đam mê kiến trúc hệ thống hiện đại, tối ưu hóa backend hiệu năng cao, trải nghiệm web tương tác 3D và các giải pháp AI tự hành (Agentic AI).",
-    tagline: "Building scalable backend services, rich interactive experiences & modern digital products.",
-    statusBadge: "Available for new challenges & collaborations",
+    summary: "Lập trình viên Full-stack xuất thân từ chuyên ngành Kỹ Thuật Phần Mềm - Đại học FPT. Đam mê kiến trúc backend hiệu năng cao, trải nghiệm 3D tương tác và các giải pháp AI tự hành.",
+    statusBadge: "Available for new opportunities",
     email: "taminhhoang.nk@gmail.com",
     github: "https://github.com/TaHoang715",
     linkedin: "https://www.linkedin.com/in/ho%C3%A0ng-t%E1%BA%A1-a9a5031b8/",
@@ -52,103 +45,101 @@ export const PORTFOLIO_DATA = {
   },
 
   academic: {
-    school: "Đại học FPT (FPT University)",
+    school: "Đại học FPT",
     degree: "Kỹ Sư Phần Mềm (Software Engineering)",
-    gpa: "7.0 / 10.0",
-    languages: [
+    gpa: "7.0 / 10",
+    englishLevels: [
       {
-        cert: "CEFR B2",
-        level: "B2 Upper-Intermediate",
-        desc: "Tương đương IELTS 5.5 - 6.0, giao tiếp chuyên môn & làm việc kỹ thuật lưu loát."
+        badge: "CEFR B2",
+        title: "IELTS 5.5 Equivalent (B2)",
+        detail: "Kỳ thi thực hiện cách đây 3 năm, giao tiếp và đọc hiểu tài liệu kỹ thuật thành thạo.",
       },
       {
-        cert: "Cambridge English Suite",
-        level: "Trọn bộ chứng chỉ quốc tế",
-        desc: "Lộ trình Cambridge toàn diện: Starters, Movers, Flyers, KET và PET."
-      }
-    ]
+        badge: "CAMBRIDGE",
+        title: "Trọn Bộ Cambridge English Suite",
+        detail: "Sở hữu đầy đủ các chứng chỉ Cambridge từ Starters, Movers, Flyers cho đến KET và PET.",
+      },
+    ],
   },
 
-  experiences: [
+  careers: [
     {
-      id: "tdv",
-      period: "2024 - Hiện tại (2 Năm)",
-      role: "Digital Instructor & Operations",
+      number: "01",
+      role: "Operations & Digital Support",
       company: "Trung tâm Tiếng Anh Thần Đồng Việt Úc (TDV)",
-      type: "Full-time / Regular",
-      description: "Đồng hành giảng dạy, tối ưu hóa quy trình quản trị dữ liệu số và nâng cao trải nghiệm ứng dụng công nghệ giáo dục.",
-      skills: ["EdTech", "Communication", "Workflow Automation", "Data Management"]
+      period: "2024 — Hiện tại (2 năm)",
+      desc: "Phụ trách điều phối số hóa, quản lý dữ liệu học viên và hỗ trợ kỹ thuật vận hành trung tâm xuyên suốt 2 năm qua.",
+      techs: ["Workflow Automation", "Data Tracking", "Communication"],
     },
     {
-      id: "kns",
-      period: "2025 (6 Tháng)",
+      number: "02",
       role: "Software Engineer Intern",
       company: "Công ty Kỷ Nguyên Số (KNS)",
-      type: "Internship",
-      description: "Trực tiếp tham gia phát triển và bảo trì các module dịch vụ backend, xây dựng RESTful APIs, tối ưu hóa cơ sở dữ liệu và cộng tác trong quy trình Agile/Scrum.",
-      skills: ["Backend Architecture", "RESTful APIs", "SQL / NoSQL", "Git Workflow", "Team Collaboration"]
+      period: "2025 (6 tháng)",
+      desc: "Tham gia phát triển backend, xây dựng các module RESTful API, tối ưu truy vấn cơ sở dữ liệu và làm việc trong quy trình Git/Agile thực tế.",
+      techs: ["Backend APIs", "Database Optimization", "Git Flow", "Agile"],
     },
     {
-      id: "freelance",
-      period: "2024 - Hiện tại",
-      role: "Freelance Developer & Indie Game Creator",
+      number: "03",
+      role: "Freelance & Indie Creator",
       company: "Independent Practice",
-      type: "Freelance",
-      description: "Phát triển các ứng dụng độc lập, giải pháp full-stack tùy biến và các tựa mini-game arcade trên nền tảng web.",
-      skills: ["Game Physics", "Full-stack Web", "TypeScript", "Performance Tuning"]
-    }
-  ] as ExperienceItem[],
+      period: "2024 — Nay",
+      desc: "Chủ động nghiên cứu và phát triển các sản phẩm web tùy biến cùng các tựa mini-game giải trí độc lập.",
+      techs: ["Game Logic", "Canvas / WebGL", "Full-stack Web", "TypeScript"],
+    },
+  ] as CareerItem[],
 
   projects: [
     {
       id: "dbp-air-defense",
+      number: "01",
       title: "DBP Air Defense",
-      tagline: "Phòng Không Chiến - Tựa Game Phòng Thủ Cứ Điểm Arcade",
-      description: "Trò chơi phòng không chiến thuật mô phỏng đánh chặn mục tiêu trên không. Xây dựng logic bắn hạ mục tiêu, hệ thống tính điểm, hiệu ứng âm thanh & hình ảnh trực quan cùng cơ chế va chạm mượt mà.",
-      tags: ["Game Dev", "Collision Detection", "Arcade Physics", "Canvas/Web", "Sound FX"],
+      category: "Arcade Combat Game",
+      tagline: "Game bắn súng phòng không đánh chặn máy bay retro",
+      description: "Tựa game arcade tự phát triển với logic phòng không, thuật toán xử lý va chạm máy bay, hiệu ứng âm thanh sống động và vòng lặp game loop tối ưu 60 FPS.",
+      tags: ["Game Dev", "Collision Detection", "Arcade Physics", "Canvas", "Audio"],
       github: "https://github.com/TaHoang715/DBP-Air-Defense",
-      demo: "https://github.com/TaHoang715/DBP-Air-Defense",
-      status: "completed",
-      featured: true,
+      status: "active",
       accentColor: "#ef4444",
-      highlights: [
-        "Thuật toán phát hiện va chạm (Collision Detection) chính xác cao",
-        "Hệ thống vòng lặp game loop tối ưu 60 FPS",
-        "Trải nghiệm arcade retro kịch tính với âm thanh hào hùng"
-      ]
+      points: [
+        "Thuật toán phát hiện va chạm vật lý chính xác",
+        "Vòng lặp game loop mượt mà không drop frame",
+        "Âm thanh và hiệu ứng retro arcade cuốn hút"
+      ],
     },
     {
       id: "lsd-word-guess",
+      number: "02",
       title: "LSD Word Guess",
-      tagline: "Trò Chơi Giải Đố Đoán Từ Vựng Tương Tác",
-      description: "Ứng dụng game đoán từ trí tuệ kết hợp giao diện tối giản hiện đại. Hỗ trợ hệ thống gợi ý từ vựng, tính toán lượt đoán, đo lường thời gian phản xạ và giao diện người dùng thân thiện.",
-      tags: ["Word Puzzle", "Interactive UI", "State Management", "TypeScript", "Educational"],
+      category: "Interactive Word Game",
+      tagline: "Game đoán từ vựng tương tác giải đố",
+      description: "Ứng dụng giải đố từ vựng tương tác cao với thuật toán kiểm tra từ tức thì, quản lý state mượt mà và giao diện tối giản thích ứng mọi kích thước màn hình.",
+      tags: ["Word Game", "State Management", "TypeScript", "Interactive UI"],
       github: "https://github.com/TaHoang715/lsd-word-guess",
-      demo: "https://github.com/TaHoang715/lsd-word-guess",
-      status: "completed",
-      featured: true,
+      status: "active",
       accentColor: "#06b6d4",
-      highlights: [
-        "Xử lý state và logic kiểm tra từ vựng tức thì không giật lag",
-        "Giao diện Clean UI thích ứng mọi kích thước màn hình",
-        "Bộ từ vựng phong phú phù hợp cho học tập & giải trí"
-      ]
+      points: [
+        "Logic gợi ý và chấm điểm từ vựng tức thì",
+        "Giao diện phản hồi trực quan, tương thích đa nền tảng",
+        "Trải nghiệm chơi thư giãn, kích thích tư duy từ vựng"
+      ],
     },
     {
-      id: "flagship-future",
+      id: "flagship-project",
+      number: "03",
       title: "Next-Gen Flagship Project",
-      tagline: "Dự Án Cờ Đầu Thế Hệ Mới (Secret In-Lab)",
-      description: "Siêu phẩm tương lai kết hợp kiến trúc Full-stack phân tán quy mô lớn, tích hợp hệ thống Autonomous AI Agents đa tác nhân và bảo mật cấp cao.",
-      tags: ["Distributed Systems", "Agentic AI", "Next.js", "Docker", "Event-Driven"],
+      category: "Secret In-Lab Project",
+      tagline: "Siêu phẩm tương lai tích hợp AI tự hành",
+      description: "Dự án tâm đắc đang được ấp ủ và hoàn thiện trong phòng thí nghiệm. Kết hợp kiến trúc hệ thống phân tán, xử lý dữ liệu lớn và các Agent AI tự động.",
+      tags: ["Distributed System", "Autonomous AI", "Next.js", "Docker"],
       status: "in_progress",
-      featured: true,
       accentColor: "#e11d48",
-      highlights: [
-        "Kiến trúc micro-services hiện đại, tính module hóa cao",
-        "Tích hợp mô hình AI suy luận tự động (Autonomous Agents)",
-        "Đang hoàn thiện những khâu cuối cùng trong phòng thí nghiệm"
-      ]
-    }
+      points: [
+        "Kiến trúc micro-services hiện đại, khả năng mở rộng cao",
+        "Tích hợp các mô hình Agentic AI suy luận đa tác nhân",
+        "Sẽ chính thức công bố mã nguồn trong thời gian tới"
+      ],
+    },
   ] as ProjectItem[],
 
   techStackGroups: [

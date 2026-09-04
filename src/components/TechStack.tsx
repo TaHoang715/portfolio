@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { Cpu, Terminal, Sparkles } from 'lucide-react';
+import { Terminal, Sparkles } from 'lucide-react';
 
 export const TechStack: React.FC = () => {
   const { techStackGroups } = PORTFOLIO_DATA;
@@ -12,18 +12,18 @@ export const TechStack: React.FC = () => {
       : techStackGroups.filter((g) => g.id === selectedGroup);
 
   return (
-    <section id="tech-stack" className="section" style={{ position: 'relative' }}>
-      <div className="container">
+    <section id="tech-stack" className="flow-section" style={{ minHeight: 'auto', padding: '140px 0' }}>
+      <div className="flow-container" style={{ width: '100%' }}>
         {/* Section Heading */}
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <div className="section-badge">
-            <Cpu size={14} /> Hệ Thống Công Nghệ & Công Cụ
+        <div style={{ textAlign: 'center', marginBottom: '44px' }}>
+          <div className="section-label" style={{ justifyContent: 'center' }}>
+            03 / SYSTEM STACK & TOOLS
           </div>
-          <h2 className="section-title">
-            Bản Đồ Kỹ Năng <span className="gradient-text-gold">Toàn Diện</span>
+          <h2 className="section-heading-huge">
+            Hệ Thống <span style={{ color: 'var(--gold)' }}>Công Nghệ</span>
           </h2>
-          <p className="section-subtitle" style={{ margin: '0 auto' }}>
-            Tổng hợp các ngôn ngữ lập trình, hệ thống backend, framework hiện đại, hạ tầng đám mây và kỹ nghệ AI Agents.
+          <p className="para-lead" style={{ margin: '0 auto', textAlign: 'center' }}>
+            Ngăn xếp công nghệ thực chiến bao gồm ngôn ngữ lập trình, hệ thống backend, hạ tầng đám mây và kỹ nghệ AI.
           </p>
         </div>
 
@@ -34,23 +34,23 @@ export const TechStack: React.FC = () => {
             justifyContent: 'center',
             flexWrap: 'wrap',
             gap: '10px',
-            marginBottom: '40px',
+            marginBottom: '36px',
           }}
         >
           <button
             onClick={() => setSelectedGroup('all')}
             style={{
               padding: '8px 18px',
-              borderRadius: 'var(--radius-full)',
+              borderRadius: '9999px',
               border: '1px solid',
-              borderColor: selectedGroup === 'all' ? 'var(--crimson-primary)' : 'var(--border-subtle)',
+              borderColor: selectedGroup === 'all' ? 'var(--crimson)' : 'var(--border-subtle)',
               background: selectedGroup === 'all' ? 'rgba(225, 29, 72, 0.2)' : 'rgba(255, 255, 255, 0.03)',
               color: selectedGroup === 'all' ? '#ffffff' : 'var(--text-muted)',
               fontFamily: 'var(--font-mono)',
               fontSize: '0.84rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'var(--transition-smooth)',
+              transition: 'all 0.2s ease',
             }}
           >
             Tất Cả ({techStackGroups.reduce((acc, g) => acc + g.skills.length, 0)})
@@ -62,16 +62,16 @@ export const TechStack: React.FC = () => {
               onClick={() => setSelectedGroup(group.id)}
               style={{
                 padding: '8px 18px',
-                borderRadius: 'var(--radius-full)',
+                borderRadius: '9999px',
                 border: '1px solid',
-                borderColor: selectedGroup === group.id ? 'var(--crimson-primary)' : 'var(--border-subtle)',
+                borderColor: selectedGroup === group.id ? 'var(--crimson)' : 'var(--border-subtle)',
                 background: selectedGroup === group.id ? 'rgba(225, 29, 72, 0.2)' : 'rgba(255, 255, 255, 0.03)',
                 color: selectedGroup === group.id ? '#ffffff' : 'var(--text-muted)',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '0.84rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'var(--transition-smooth)',
+                transition: 'all 0.2s ease',
               }}
             >
               {group.title}
@@ -79,20 +79,24 @@ export const TechStack: React.FC = () => {
           ))}
         </div>
 
-        {/* Terminal Window Container */}
+        {/* Terminal Window */}
         <div
           style={{
-            background: '#040916',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: 'var(--radius-lg)',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(3, 7, 18, 0.8)',
+            background: 'rgba(4, 9, 22, 0.75)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '16px',
+            boxShadow: '0 24px 60px rgba(0, 0, 0, 0.6)',
             overflow: 'hidden',
+            maxWidth: '1100px',
+            margin: '0 auto',
           }}
         >
-          {/* Terminal Window Header Bar */}
+          {/* Header Bar */}
           <div
             style={{
-              background: '#070f24',
+              background: 'rgba(7, 15, 36, 0.9)',
               padding: '12px 20px',
               borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
               display: 'flex',
@@ -101,17 +105,17 @@ export const TechStack: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
-              <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#eab308', display: 'inline-block' }} />
-              <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
+              <span style={{ width: '11px', height: '11px', borderRadius: '50%', background: '#ef4444' }} />
+              <span style={{ width: '11px', height: '11px', borderRadius: '50%', background: '#eab308' }} />
+              <span style={{ width: '11px', height: '11px', borderRadius: '50%', background: '#22c55e' }} />
               <span
                 style={{
                   marginLeft: '12px',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.85rem',
-                  color: 'var(--text-main)',
+                  color: '#ffffff',
                   fontWeight: 700,
-                  letterSpacing: '0.05em',
+                  letterSpacing: '0.04em',
                 }}
               >
                 ▼ [//] SYSTEM STACK & TOOLS
@@ -120,23 +124,22 @@ export const TechStack: React.FC = () => {
             <div
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.75rem',
-                color: 'var(--gold-star)',
+                fontSize: '0.74rem',
+                color: 'var(--gold)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
               }}
             >
-              <Sparkles size={12} /> Live Interactive Matrix
+              <Sparkles size={12} /> Interactive Matrix
             </div>
           </div>
 
-          {/* Terminal Content Body */}
+          {/* Body */}
           <div style={{ padding: '32px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
               {filteredGroups.map((group) => (
                 <div key={group.id}>
-                  {/* Code Comment Header */}
                   <div
                     style={{
                       fontFamily: 'var(--font-mono)',
@@ -149,25 +152,18 @@ export const TechStack: React.FC = () => {
                       gap: '8px',
                     }}
                   >
-                    <Terminal size={14} color="var(--crimson-bright)" />
+                    <Terminal size={14} color="var(--crimson)" />
                     <span>{group.comment}</span>
                   </div>
 
-                  {/* Badges Flow */}
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '10px',
-                    }}
-                  >
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                     {group.skills.map((skill) => (
                       <div
                         key={skill.name}
                         style={{
                           display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '7px',
+                          gap: '6px',
                           padding: '6px 14px',
                           borderRadius: '6px',
                           background: skill.bg,

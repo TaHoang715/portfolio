@@ -1,5 +1,5 @@
 import React from 'react';
-import { GalaxyCanvas } from './components/canvas/GalaxyCanvas';
+import { InteractiveWorldCanvas } from './components/canvas/InteractiveWorldCanvas';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -12,10 +12,10 @@ import { Footer } from './components/Footer';
 export const App: React.FC = () => {
   return (
     <div className="portfolio-app" style={{ minHeight: '100vh', position: 'relative' }}>
-      {/* 3D Deep Space Particle Canvas */}
-      <GalaxyCanvas />
+      {/* Persistent Fullscreen 3D World: Stars + Arlecchino reacting to scroll flow */}
+      <InteractiveWorldCanvas />
 
-      {/* Main Content Layout */}
+      {/* Foreground Sections flowing seamlessly over 3D space */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Navbar />
         <main>
