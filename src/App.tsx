@@ -1,33 +1,35 @@
 import React from 'react';
-import { InteractiveWorldCanvas } from './components/canvas/InteractiveWorldCanvas';
+import { BackgroundCosmos } from './components/canvas/BackgroundCosmos';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Experience } from './components/Experience';
+import { BentoGrid } from './components/BentoGrid';
 import { TechStack } from './components/TechStack';
 import { Projects } from './components/Projects';
+import { Experience } from './components/Experience';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export const App: React.FC = () => {
   return (
-    <div className="portfolio-app" style={{ minHeight: '100vh', position: 'relative' }}>
-      {/* Persistent Fullscreen 3D World: Stars + Arlecchino reacting to scroll flow */}
-      <InteractiveWorldCanvas />
+    <div style={{ position: 'relative', minHeight: '100vh', background: '#000319', overflow: 'hidden' }}>
+      {/* 3D Cosmos Particles Background */}
+      <BackgroundCosmos />
 
-      {/* Foreground Sections flowing seamlessly over 3D space */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Experience />
-          <TechStack />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
+      {/* Floating Navigation Bar */}
+      <Navbar />
+
+      {/* Main Sections */}
+      <main style={{ position: 'relative', zIndex: 2 }}>
+        <Hero />
+        <BentoGrid />
+        <TechStack />
+        <Projects />
+        <Experience />
+        <Contact />
+      </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

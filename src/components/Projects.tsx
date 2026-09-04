@@ -1,138 +1,180 @@
 import React from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { Github, ExternalLink, Sparkles, Check } from 'lucide-react';
+import { Github, ExternalLink, Sparkles, Check, Flame } from 'lucide-react';
 
 export const Projects: React.FC = () => {
   const { projects } = PORTFOLIO_DATA;
 
   return (
-    <section id="projects" className="flow-section">
-      <div className="flow-container" style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-        <div style={{ width: '100%', maxWidth: '680px' }}>
-          {/* Section Number */}
-          <div className="section-label">
-            04 / DỰ ÁN & MÃ NGUỒN
+    <section id="projects" className="site-section">
+      <div className="bento-container">
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+          <div className="section-tag" style={{ justifyContent: 'center' }}>
+            <Flame size={13} /> SHOWCASE & REPOSITORIES
           </div>
-
-          <h2 className="section-heading-huge">
-            Sản Phẩm <br />
-            <span style={{ color: 'var(--crimson)' }}>Tâm Huyết</span>
+          <h2 className="section-title-bento">
+            Dự Án <span style={{ color: 'var(--purple-accent)' }}>Tiêu Biểu</span>
           </h2>
+          <p className="section-desc" style={{ margin: '0 auto' }}>
+            Các sản phẩm độc lập được xây dựng với tinh thần chỉn chu về trải nghiệm người dùng,
+            thuật toán va chạm mượt mà và mã nguồn sạch sẽ.
+          </p>
+        </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {projects.map((p) => (
-              <div
-                key={p.id}
-                className="clean-panel"
-                style={{
-                  borderLeft: `4px solid ${p.accentColor}`,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.8rem',
-                      color: p.accentColor,
-                      fontWeight: 700,
-                    }}
-                  >
-                    #{p.number} • {p.category}
-                  </span>
+        {/* 3D Pin Cards Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '28px',
+          }}
+        >
+          {projects.map((p) => {
+            const isSecret = p.id === 'flagship-project';
 
-                  {p.github && (
-                    <a
-                      href={p.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ color: 'var(--text-muted)', transition: 'color 0.2s', display: 'flex' }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
-                      aria-label="GitHub Repository"
-                    >
-                      <Github size={20} />
-                    </a>
-                  )}
-                </div>
-
-                <h3
+            return (
+              <div key={p.id} className="pin-card-wrapper">
+                <div
+                  className="bento-card pin-card-inner"
                   style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '1.45rem',
-                    fontWeight: 800,
-                    color: '#ffffff',
-                    marginBottom: '4px',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    borderTop: `3px solid ${p.accentColor}`,
                   }}
                 >
-                  {p.title}
-                </h3>
-
-                <div style={{ fontSize: '0.92rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                  {p.tagline}
-                </div>
-
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '16px' }}>
-                  {p.description}
-                </p>
-
-                {/* Highlights */}
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '18px' }}>
-                  {p.points.map((pt, i) => (
-                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.88rem', color: '#e2e8f0' }}>
-                      <Check size={14} color={p.accentColor} style={{ flexShrink: 0 }} />
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Tags & Actions */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', paddingTop: '14px', borderTop: '1px solid var(--border-subtle)' }}>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                    {p.tags.map((t) => (
+                  <div>
+                    {/* Top status */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                       <span
-                        key={t}
                         style={{
-                          fontSize: '0.74rem',
                           fontFamily: 'var(--font-mono)',
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          padding: '2px 8px',
-                          borderRadius: '4px',
-                          color: '#cbd5e1',
+                          fontSize: '0.74rem',
+                          padding: '3px 10px',
+                          borderRadius: '9999px',
+                          background: isSecret ? 'rgba(225, 29, 72, 0.15)' : 'rgba(16, 185, 129, 0.15)',
+                          border: `1px solid ${isSecret ? 'rgba(225, 29, 72, 0.4)' : 'rgba(16, 185, 129, 0.4)'}`,
+                          color: isSecret ? '#fda4af' : '#34d399',
                         }}
                       >
-                        #{t}
+                        {isSecret ? 'IN THE LAB' : 'COMPLETED'}
                       </span>
-                    ))}
+
+                      {p.github && (
+                        <a
+                          href={p.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ color: 'var(--text-muted)', transition: 'color 0.2s', display: 'flex' }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                          aria-label="GitHub Repository"
+                        >
+                          <Github size={20} />
+                        </a>
+                      )}
+                    </div>
+
+                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.45rem', fontWeight: 800, color: '#ffffff', marginBottom: '4px' }}>
+                      {p.title}
+                    </h3>
+                    <div style={{ fontSize: '0.88rem', color: p.accentColor, fontWeight: 600, marginBottom: '12px' }}>
+                      {p.tagline}
+                    </div>
+
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '18px' }}>
+                      {p.description}
+                    </p>
+
+                    {/* Highlights */}
+                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' }}>
+                      {p.points.map((pt, i) => (
+                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.85rem', color: '#e2e8f0' }}>
+                          <Check size={14} color={p.accentColor} style={{ marginTop: '3px', flexShrink: 0 }} />
+                          <span>{pt}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  {p.github ? (
-                    <a
-                      href={p.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn-action btn-ghost-border"
-                      style={{ padding: '8px 16px', fontSize: '0.85rem' }}
-                    >
-                      <Github size={15} /> Source Code <ExternalLink size={13} />
-                    </a>
-                  ) : (
-                    <span
-                      style={{
-                        fontSize: '0.82rem',
-                        fontFamily: 'var(--font-mono)',
-                        color: 'var(--gold)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                      }}
-                    >
-                      <Sparkles size={14} /> In Development
-                    </span>
-                  )}
+                  {/* Bottom Tags & Button */}
+                  <div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '18px', paddingTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                      {p.tags.map((t) => (
+                        <span
+                          key={t}
+                          style={{
+                            fontSize: '0.74rem',
+                            fontFamily: 'var(--font-mono)',
+                            background: 'rgba(255, 255, 255, 0.05)',
+                            padding: '2px 8px',
+                            borderRadius: '4px',
+                            color: '#cbd5e1',
+                          }}
+                        >
+                          #{t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {p.github ? (
+                      <a
+                        href={p.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          padding: '10px 16px',
+                          borderRadius: '10px',
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          color: '#ffffff',
+                          textDecoration: 'none',
+                          fontSize: '0.88rem',
+                          fontFamily: 'var(--font-heading)',
+                          fontWeight: 600,
+                          transition: 'all 0.2s',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                        }}
+                      >
+                        <Github size={16} /> Xem Mã Nguồn <ExternalLink size={13} />
+                      </a>
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          padding: '10px 16px',
+                          borderRadius: '10px',
+                          background: 'rgba(255, 255, 255, 0.03)',
+                          border: '1px solid rgba(255, 255, 255, 0.06)',
+                          color: 'var(--gold)',
+                          fontSize: '0.85rem',
+                          fontFamily: 'var(--font-mono)',
+                        }}
+                      >
+                        <Sparkles size={14} /> Dự Án Sắp Ra Mắt
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

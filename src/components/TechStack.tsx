@@ -4,99 +4,97 @@ import { Terminal, Sparkles } from 'lucide-react';
 
 export const TechStack: React.FC = () => {
   const { techStackGroups } = PORTFOLIO_DATA;
-  const [selectedGroup, setSelectedGroup] = useState<string>('all');
+  const [selected, setSelected] = useState<string>('all');
 
-  const filteredGroups =
-    selectedGroup === 'all'
+  const filtered =
+    selected === 'all'
       ? techStackGroups
-      : techStackGroups.filter((g) => g.id === selectedGroup);
+      : techStackGroups.filter((g) => g.id === selected);
 
   return (
-    <section id="tech-stack" className="flow-section" style={{ minHeight: 'auto', padding: '140px 0' }}>
-      <div className="flow-container" style={{ width: '100%' }}>
-        {/* Section Heading */}
+    <section id="tech-stack" className="site-section">
+      <div className="bento-container">
+        {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-          <div className="section-label" style={{ justifyContent: 'center' }}>
-            03 / SYSTEM STACK & TOOLS
+          <div className="section-tag" style={{ justifyContent: 'center' }}>
+            <Sparkles size={13} /> SYSTEM STACK & ARSENAL
           </div>
-          <h2 className="section-heading-huge">
-            Hệ Thống <span style={{ color: 'var(--gold)' }}>Công Nghệ</span>
+          <h2 className="section-title-bento">
+            Hệ Thống <span style={{ color: 'var(--purple-accent)' }}>Công Nghệ</span>
           </h2>
-          <p className="para-lead" style={{ margin: '0 auto', textAlign: 'center' }}>
-            Ngăn xếp công nghệ thực chiến bao gồm ngôn ngữ lập trình, hệ thống backend, hạ tầng đám mây và kỹ nghệ AI.
+          <p className="section-desc" style={{ margin: '0 auto' }}>
+            Ngăn xếp công nghệ thực chiến gồm 6 phân hệ: backend phân tán, web UI, ứng dụng di động, hạ tầng cloud, dịch vụ thanh toán và kỹ nghệ AI Agents.
           </p>
         </div>
 
-        {/* Filter Tabs */}
+        {/* Tab filters */}
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            gap: '10px',
-            marginBottom: '36px',
+            gap: '8px',
+            marginBottom: '32px',
           }}
         >
           <button
-            onClick={() => setSelectedGroup('all')}
+            onClick={() => setSelected('all')}
             style={{
-              padding: '8px 18px',
+              padding: '6px 16px',
               borderRadius: '9999px',
               border: '1px solid',
-              borderColor: selectedGroup === 'all' ? 'var(--crimson)' : 'var(--border-subtle)',
-              background: selectedGroup === 'all' ? 'rgba(225, 29, 72, 0.2)' : 'rgba(255, 255, 255, 0.03)',
-              color: selectedGroup === 'all' ? '#ffffff' : 'var(--text-muted)',
+              borderColor: selected === 'all' ? 'var(--crimson)' : 'rgba(255, 255, 255, 0.1)',
+              background: selected === 'all' ? 'rgba(225, 29, 72, 0.2)' : 'rgba(255, 255, 255, 0.03)',
+              color: selected === 'all' ? '#ffffff' : 'var(--text-muted)',
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.84rem',
+              fontSize: '0.8rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all 0.2s ease',
+              transition: 'all 0.2s',
             }}
           >
             Tất Cả ({techStackGroups.reduce((acc, g) => acc + g.skills.length, 0)})
           </button>
 
-          {techStackGroups.map((group) => (
+          {techStackGroups.map((g) => (
             <button
-              key={group.id}
-              onClick={() => setSelectedGroup(group.id)}
+              key={g.id}
+              onClick={() => setSelected(g.id)}
               style={{
-                padding: '8px 18px',
+                padding: '6px 16px',
                 borderRadius: '9999px',
                 border: '1px solid',
-                borderColor: selectedGroup === group.id ? 'var(--crimson)' : 'var(--border-subtle)',
-                background: selectedGroup === group.id ? 'rgba(225, 29, 72, 0.2)' : 'rgba(255, 255, 255, 0.03)',
-                color: selectedGroup === group.id ? '#ffffff' : 'var(--text-muted)',
+                borderColor: selected === g.id ? 'var(--crimson)' : 'rgba(255, 255, 255, 0.1)',
+                background: selected === g.id ? 'rgba(225, 29, 72, 0.2)' : 'rgba(255, 255, 255, 0.03)',
+                color: selected === g.id ? '#ffffff' : 'var(--text-muted)',
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.84rem',
+                fontSize: '0.8rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.2s ease',
+                transition: 'all 0.2s',
               }}
             >
-              {group.title}
+              {g.title}
             </button>
           ))}
         </div>
 
-        {/* Terminal Window */}
+        {/* Terminal Matrix Box */}
         <div
           style={{
-            background: 'rgba(4, 9, 22, 0.75)',
+            background: 'rgba(4, 7, 29, 0.85)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '16px',
-            boxShadow: '0 24px 60px rgba(0, 0, 0, 0.6)',
+            borderRadius: '20px',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)',
             overflow: 'hidden',
-            maxWidth: '1100px',
-            margin: '0 auto',
           }}
         >
-          {/* Header Bar */}
+          {/* Window Top Bar */}
           <div
             style={{
-              background: 'rgba(7, 15, 36, 0.9)',
+              background: 'rgba(7, 12, 40, 0.9)',
               padding: '12px 20px',
               borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
               display: 'flex',
@@ -105,14 +103,14 @@ export const TechStack: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '11px', height: '11px', borderRadius: '50%', background: '#ef4444' }} />
-              <span style={{ width: '11px', height: '11px', borderRadius: '50%', background: '#eab308' }} />
-              <span style={{ width: '11px', height: '11px', borderRadius: '50%', background: '#22c55e' }} />
+              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
+              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#eab308' }} />
+              <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e' }} />
               <span
                 style={{
                   marginLeft: '12px',
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   color: '#ffffff',
                   fontWeight: 700,
                   letterSpacing: '0.04em',
@@ -121,43 +119,36 @@ export const TechStack: React.FC = () => {
                 ▼ [//] SYSTEM STACK & TOOLS
               </span>
             </div>
-            <div
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.74rem',
-                color: 'var(--gold)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-              }}
-            >
-              <Sparkles size={12} /> Interactive Matrix
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: 'var(--gold)' }}>
+              Interactive Live Matrix
             </div>
           </div>
 
-          {/* Body */}
-          <div style={{ padding: '32px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
-              {filteredGroups.map((group) => (
-                <div key={group.id}>
+          {/* Window Body */}
+          <div style={{ padding: '28px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '26px' }}>
+              {filtered.map((g) => (
+                <div key={g.id}>
+                  {/* Code comment */}
                   <div
                     style={{
                       fontFamily: 'var(--font-mono)',
-                      fontSize: '0.92rem',
+                      fontSize: '0.88rem',
                       fontWeight: 700,
-                      color: 'var(--text-dim)',
-                      marginBottom: '14px',
+                      color: 'var(--text-muted)',
+                      marginBottom: '12px',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '8px',
                     }}
                   >
                     <Terminal size={14} color="var(--crimson)" />
-                    <span>{group.comment}</span>
+                    <span>{g.comment}</span>
                   </div>
 
+                  {/* Badges */}
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                    {group.skills.map((skill) => (
+                    {g.skills.map((skill) => (
                       <div
                         key={skill.name}
                         style={{
@@ -169,23 +160,23 @@ export const TechStack: React.FC = () => {
                           background: skill.bg,
                           color: skill.color,
                           fontFamily: 'var(--font-heading)',
-                          fontSize: '0.9rem',
+                          fontSize: '0.88rem',
                           fontWeight: 700,
                           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.35)',
-                          cursor: 'default',
-                          transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease',
                           border: '1px solid rgba(255, 255, 255, 0.12)',
+                          cursor: 'default',
+                          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'translateY(-3px) scale(1.04)';
-                          e.currentTarget.style.boxShadow = `0 8px 20px ${skill.bg}88`;
+                          e.currentTarget.style.boxShadow = `0 8px 20px ${skill.bg}77`;
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = 'translateY(0) scale(1)';
                           e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.35)';
                         }}
                       >
-                        <span>{skill.name}</span>
+                        {skill.name}
                       </div>
                     ))}
                   </div>

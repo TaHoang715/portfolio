@@ -1,212 +1,177 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sparkles, Send } from 'lucide-react';
+import { Send, Menu, X, Sparkles } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Giới Thiệu', href: '#about' },
-    { name: 'Kinh Nghiệm', href: '#experience' },
-    { name: 'Kỹ Năng', href: '#tech-stack' },
-    { name: 'Dự Án', href: '#projects' },
-    { name: 'Liên Hệ', href: '#contact' },
+  const navItems = [
+    { name: 'About', href: '#about' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Tech Stack', href: '#tech-stack' },
+    { name: 'Projects', href: '#projects' },
   ];
 
   return (
     <header
       style={{
         position: 'fixed',
-        top: 0,
+        top: '20px',
         left: 0,
         right: 0,
         zIndex: 100,
-        transition: 'all 0.3s ease',
-        background: scrolled
-          ? 'rgba(3, 7, 18, 0.82)'
-          : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled
-          ? '1px solid rgba(255, 255, 255, 0.08)'
-          : '1px solid transparent',
-        padding: scrolled ? '14px 0' : '22px 0',
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '0 16px',
+        pointerEvents: 'none',
       }}
     >
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {/* Logo */}
+      <nav
+        style={{
+          pointerEvents: 'auto',
+          background: scrolled ? 'rgba(4, 7, 29, 0.88)' : 'rgba(4, 7, 29, 0.65)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255, 255, 255, 0.12)',
+          borderRadius: '9999px',
+          padding: '8px 24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '24px',
+          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        {/* Brand */}
         <a
           href="#"
           style={{
+            textDecoration: 'none',
+            fontFamily: 'var(--font-heading)',
+            fontWeight: 800,
+            fontSize: '1.05rem',
+            color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
-            textDecoration: 'none',
-            color: 'inherit',
+            gap: '6px',
           }}
         >
-          <div
-            style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #e11d48, #0f172a)',
-              border: '1px solid rgba(225, 29, 72, 0.5)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 20px rgba(225, 29, 72, 0.4)',
-              fontWeight: 800,
-              fontFamily: 'var(--font-heading)',
-              color: '#ffffff',
-              fontSize: '1.1rem',
-            }}
-          >
-            TH
-          </div>
-          <div>
-            <span
-              style={{
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 800,
-                fontSize: '1.25rem',
-                letterSpacing: '-0.02em',
-                display: 'block',
-                lineHeight: 1.1,
-              }}
-            >
-              TaHoang<span style={{ color: 'var(--crimson-primary)' }}>715</span>
-            </span>
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.72rem',
-                color: 'var(--gold-star)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-              }}
-            >
-              <Sparkles size={11} /> Deep Space Galaxy
-            </span>
-          </div>
+          <span style={{ color: 'var(--crimson)' }}>TH</span>
+          <span>715</span>
         </a>
 
-        {/* Desktop Nav Links */}
-        <nav
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '28px',
-          }}
-          className="desktop-nav"
-        >
-          {navLinks.map((link) => (
+        {/* Desktop Links */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }} className="desktop-links">
+          {navItems.map((item) => (
             <a
-              key={link.name}
-              href={link.href}
+              key={item.name}
+              href={item.href}
               style={{
-                color: 'var(--text-muted)',
                 textDecoration: 'none',
                 fontFamily: 'var(--font-heading)',
-                fontSize: '0.94rem',
+                fontSize: '0.88rem',
                 fontWeight: 500,
-                transition: 'color 0.2s ease',
+                color: 'var(--text-secondary)',
+                transition: 'color 0.2s',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
             >
-              {link.name}
+              {item.name}
             </a>
           ))}
+        </div>
 
-          <a
-            href="#contact"
-            className="btn btn-crimson"
-            style={{
-              padding: '8px 20px',
-              fontSize: '0.9rem',
-            }}
-          >
-            <Send size={15} /> Kết Nối
-          </a>
-        </nav>
+        {/* Contact CTA */}
+        <a
+          href="#contact"
+          className="magic-button"
+          style={{ height: '36px', padding: '1px' }}
+        >
+          <span className="magic-button-shimmer" />
+          <span className="magic-button-content" style={{ padding: '0 14px', fontSize: '0.82rem' }}>
+            <Send size={12} /> Contact
+          </span>
+        </a>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile menu toggle */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle navigation menu"
+          onClick={() => setMobileOpen(!mobileOpen)}
           style={{
-            display: 'none',
             background: 'transparent',
             border: 'none',
             color: '#ffffff',
             cursor: 'pointer',
-            padding: '8px',
+            display: 'none',
           }}
-          className="mobile-toggle"
+          className="mobile-btn"
+          aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
-      </div>
+      </nav>
 
       {/* Mobile Drawer */}
-      {mobileMenuOpen && (
+      {mobileOpen && (
         <div
           style={{
-            background: 'rgba(3, 7, 18, 0.96)',
+            pointerEvents: 'auto',
+            position: 'absolute',
+            top: '70px',
+            width: '90%',
+            maxWidth: '380px',
+            background: 'rgba(4, 7, 29, 0.95)',
             backdropFilter: 'blur(20px)',
-            borderBottom: '1px solid var(--border-crimson)',
-            padding: '24px',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            borderRadius: '20px',
+            padding: '20px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '18px',
+            gap: '12px',
           }}
         >
-          {navLinks.map((link) => (
+          {navItems.map((item) => (
             <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
+              key={item.name}
+              href={item.href}
+              onClick={() => setMobileOpen(false)}
               style={{
-                color: '#ffffff',
                 textDecoration: 'none',
+                color: '#ffffff',
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.1rem',
                 fontWeight: 600,
                 padding: '8px 0',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
               }}
             >
-              {link.name}
+              {item.name}
             </a>
           ))}
           <a
             href="#contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="btn btn-crimson"
-            style={{ marginTop: '8px' }}
+            onClick={() => setMobileOpen(false)}
+            className="magic-button"
+            style={{ width: '100%', marginTop: '8px' }}
           >
-            <Send size={16} /> Liên Hệ Ngay
+            <span className="magic-button-shimmer" />
+            <span className="magic-button-content">
+              <Sparkles size={14} /> Contact Me
+            </span>
           </a>
         </div>
       )}
 
-      {/* Embedded CSS for responsive nav */}
       <style>{`
-        @media (max-width: 820px) {
-          .desktop-nav {
+        @media (max-width: 640px) {
+          .desktop-links {
             display: none !important;
           }
-          .mobile-toggle {
+          .mobile-btn {
             display: block !important;
           }
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { ChevronUp, Heart, Sparkles } from 'lucide-react';
+import { ArrowUp, Sparkles } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { personal } = PORTFOLIO_DATA;
@@ -12,44 +12,49 @@ export const Footer: React.FC = () => {
   return (
     <footer
       style={{
-        borderTop: '1px solid var(--border-subtle)',
-        background: 'rgba(3, 7, 18, 0.95)',
-        padding: '40px 0',
+        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+        background: 'rgba(0, 3, 25, 0.95)',
+        padding: '36px 0',
         position: 'relative',
         zIndex: 10,
       }}
     >
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
+      <div className="bento-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.2rem', color: '#ffffff' }}>
-              {personal.fullName}
-            </span>
-            <span style={{ color: 'var(--crimson-primary)', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.1rem', color: '#ffffff' }}>
+            {personal.fullName}{' '}
+            <span style={{ color: 'var(--crimson)', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 600 }}>
               (@{personal.alias})
             </span>
           </div>
-          <p style={{ fontSize: '0.86rem', color: 'var(--text-muted)' }}>
-            Deep Space Galaxy & Arlecchino 3D Experience • Designed & Engineered with{' '}
-            <Heart size={14} color="var(--crimson-bright)" style={{ display: 'inline', verticalAlign: 'middle' }} />
-          </p>
+          <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+            © {new Date().getFullYear()} Tạ Minh Hoàng. Powered by React, Three.js & Tailwind.
+          </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <span style={{ fontSize: '0.82rem', fontFamily: 'var(--font-mono)', color: 'var(--gold-star)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Sparkles size={13} /> Hosted on Vercel
+          <span style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', color: 'var(--purple-accent)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Sparkles size={12} /> Hosted on Vercel
           </span>
 
           <button
             onClick={scrollToTop}
-            className="btn btn-glass"
             style={{
-              padding: '8px 14px',
-              fontSize: '0.85rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: '9999px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              color: '#ffffff',
+              cursor: 'pointer',
+              fontSize: '0.82rem',
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 600,
             }}
-            aria-label="Scroll back to top"
           >
-            <ChevronUp size={16} /> Lên Đầu Trang
+            <ArrowUp size={14} /> Back to Top
           </button>
         </div>
       </div>
