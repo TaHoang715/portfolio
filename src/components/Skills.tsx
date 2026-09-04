@@ -2,55 +2,106 @@ import React, { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { TRANSLATIONS } from '../data/translations';
 
-type SkillCategory = 'all' | 'languages' | 'frontend' | 'backend' | 'databases' | 'tools';
+type SkillCategory = 'all' | 'languages' | 'frontend' | 'databases' | 'ai';
 
 interface Skill {
   name: string;
   category: SkillCategory;
-  iconClass: string;
+  iconClass?: string;
   iconColor?: string;
-  repoHint?: string;
+  svgIcon?: React.ReactNode;
 }
 
 const SKILLS: Skill[] = [
-  // Languages (Derived directly from GitHub @TaHoang715 codebases)
-  { name: 'TypeScript', category: 'languages', iconClass: 'devicon-typescript-plain colored', repoHint: 'portfolio, games' },
-  { name: 'C#', category: 'languages', iconClass: 'devicon-csharp-plain colored', repoHint: 'PE_PRN232, backend' },
-  { name: 'JavaScript', category: 'languages', iconClass: 'devicon-javascript-plain colored', repoHint: 'streak-booster' },
-  { name: 'Python', category: 'languages', iconClass: 'devicon-python-plain colored', repoHint: 'Agent-skills' },
-  { name: 'Java', category: 'languages', iconClass: 'devicon-java-plain colored', repoHint: 'mathutil, OOP' },
-  { name: 'Dart', category: 'languages', iconClass: 'devicon-dart-plain colored', repoHint: 'PRM393 Mobile' },
-  { name: 'C++', category: 'languages', iconClass: 'devicon-cplusplus-plain colored' },
+  // 1. Core Languages & Backend (Direct from GitHub @TaHoang715 README)
+  { name: 'C#', category: 'languages', iconClass: 'devicon-csharp-plain colored' },
+  { name: '.NET Core', category: 'languages', iconClass: 'devicon-dotnetcore-plain colored' },
+  { name: 'ASP.NET Core', category: 'languages', iconClass: 'devicon-dot-net-plain colored' },
+  { name: 'Java', category: 'languages', iconClass: 'devicon-java-plain colored' },
+  { name: 'Spring Boot', category: 'languages', iconClass: 'devicon-spring-original colored' },
+  { name: 'TypeScript', category: 'languages', iconClass: 'devicon-typescript-plain colored' },
+  { name: 'JavaScript', category: 'languages', iconClass: 'devicon-javascript-plain colored' },
+  { name: 'Node.js', category: 'languages', iconClass: 'devicon-nodejs-plain colored' },
 
-  // Frontend & Mobile (Derived from GitHub @TaHoang715 codebases)
-  { name: 'React.js', category: 'frontend', iconClass: 'devicon-react-original colored', repoHint: 'SPA Architecture' },
-  { name: 'Flutter', category: 'frontend', iconClass: 'devicon-flutter-plain colored', repoHint: 'Cross-platform Mobile' },
-  { name: 'HTML5 & Canvas', category: 'frontend', iconClass: 'devicon-html5-plain colored', repoHint: '2D Game Physics' },
-  { name: 'CSS3 / Glassmorphism', category: 'frontend', iconClass: 'devicon-css3-plain colored', repoHint: 'Modern UI/UX' },
-  { name: 'Three.js / WebGL', category: 'frontend', iconClass: 'devicon-threejs-original', repoHint: '3D Cyber Matrix' },
-  { name: 'Vite', category: 'frontend', iconClass: 'devicon-vitejs-plain colored', repoHint: 'Build Tooling' },
+  // 2. Web Frameworks & Mobile UI (Direct from GitHub @TaHoang715 README)
+  { name: 'React', category: 'frontend', iconClass: 'devicon-react-original colored' },
+  { name: 'Next.js', category: 'frontend', iconClass: 'devicon-nextjs-plain' },
   { name: 'Tailwind CSS', category: 'frontend', iconClass: 'devicon-tailwindcss-original colored' },
+  { name: 'Flutter', category: 'frontend', iconClass: 'devicon-flutter-plain colored' },
+  { name: 'Dart', category: 'frontend', iconClass: 'devicon-dart-plain colored' },
+  { name: 'Kotlin', category: 'frontend', iconClass: 'devicon-kotlin-plain colored' },
+  { name: 'Swift', category: 'frontend', iconClass: 'devicon-swift-plain colored' },
+  { name: 'HTML5', category: 'frontend', iconClass: 'devicon-html5-plain colored' },
+  { name: 'CSS3', category: 'frontend', iconClass: 'devicon-css3-plain colored' },
 
-  // Backend & Architecture (Derived from GitHub @TaHoang715 codebases)
-  { name: 'ASP.NET Core', category: 'backend', iconClass: 'devicon-dotnetcore-plain colored', repoHint: '.NET 8 Web API' },
-  { name: 'Entity Framework', category: 'backend', iconClass: 'devicon-csharp-plain colored', repoHint: 'EF Core ORM' },
-  { name: 'Node.js', category: 'backend', iconClass: 'devicon-nodejs-plain colored', repoHint: 'Scripts & CLI' },
-  { name: 'RESTful APIs', category: 'backend', iconClass: 'devicon-fastapi-plain colored', repoHint: 'JSON Web Services' },
-  { name: 'Express.js', category: 'backend', iconClass: 'devicon-express-original' },
-
-  // Databases (Derived from GitHub @TaHoang715 codebases)
-  { name: 'MS SQL Server', category: 'databases', iconClass: 'devicon-microsoftsqlserver-plain colored', repoHint: 'Relational DB' },
-  { name: 'MySQL', category: 'databases', iconClass: 'devicon-mysql-plain colored' },
+  // 3. Databases, Cloud & Infrastructure (Direct from GitHub @TaHoang715 README)
   { name: 'PostgreSQL', category: 'databases', iconClass: 'devicon-postgresql-plain colored' },
+  { name: 'MySQL', category: 'databases', iconClass: 'devicon-mysql-plain colored' },
   { name: 'MongoDB', category: 'databases', iconClass: 'devicon-mongodb-plain colored' },
+  { name: 'MS SQL Server', category: 'databases', iconClass: 'devicon-microsoftsqlserver-plain colored' },
+  { name: 'Azure', category: 'databases', iconClass: 'devicon-azure-plain colored' },
+  { name: 'Docker', category: 'databases', iconClass: 'devicon-docker-plain colored' },
+  { name: 'GitHub Actions', category: 'databases', iconClass: 'devicon-githubactions-plain colored' },
+  { name: 'Vercel', category: 'databases', iconClass: 'devicon-vercel-original' },
+  { name: 'Git', category: 'databases', iconClass: 'devicon-git-plain colored' },
+  { name: 'Postman', category: 'databases', iconClass: 'devicon-postman-plain colored' },
+  { name: 'Swagger', category: 'databases', iconClass: 'devicon-swagger-plain colored' },
 
-  // Tools & DevOps (Derived from GitHub @TaHoang715 codebases)
-  { name: 'Git', category: 'tools', iconClass: 'devicon-git-plain colored', repoHint: 'Version Control' },
-  { name: 'GitHub', category: 'tools', iconClass: 'devicon-github-original', repoHint: 'Actions & Repos' },
-  { name: 'Visual Studio', category: 'tools', iconClass: 'devicon-visualstudio-plain colored', repoHint: '.NET IDE' },
-  { name: 'VS Code', category: 'tools', iconClass: 'devicon-vscode-plain colored', repoHint: 'Code Editor' },
-  { name: 'Postman', category: 'tools', iconClass: 'devicon-postman-plain colored', repoHint: 'API Testing' },
-  { name: 'Vercel', category: 'tools', iconClass: 'devicon-vercel-original', repoHint: 'Deployments' },
+  // 4. AI Coding Tools (Exclusively Claude, GPT, Gemini, DeepSeek, Qwen)
+  {
+    name: 'Claude',
+    category: 'ai',
+    svgIcon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="#D97757">
+        <path d="M4.53 18.23l4.28-7.38-1.5-2.61L1.25 18.23h3.28zm8.6-14.88L6.45 14.88l1.64 2.85 8.32-14.38h-3.28zm1.09 3.82l-5.74 9.93 1.64 2.85 7.38-12.78h-3.28zm3.28 5.67l-4.1 7.11 1.64 2.85 5.74-9.96h-3.28z"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'ChatGPT (GPT)',
+    category: 'ai',
+    svgIcon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="#10A37F">
+        <path d="M22.28 9.93a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.06 6.06 0 0 0 10.6.4a6.05 6.05 0 0 0-5.77 4.2 6 6 0 0 0-4.04 2.93 6.06 6.06 0 0 0 .75 7.1 5.95 5.95 0 0 0 .52 4.9 6.05 6.05 0 0 0 6.51 2.91A6.05 6.05 0 0 0 13.4 23.6a6.05 6.05 0 0 0 5.77-4.2 6.01 6.01 0 0 0 4.04-2.93 6.06 6.06 0 0 0-.93-6.54zm-8.88 12.17a4.54 4.54 0 0 1-2.92-1.05l.15-.08 4.84-2.79a.8.8 0 0 0 .4-.68v-6.84l2.17 1.25a.08.08 0 0 1 .04.06v5.82a4.57 4.57 0 0 1-4.68 4.31zm-9.37-4.47a4.53 4.53 0 0 1-.54-3.06l.16.1 4.84 2.8a.78.78 0 0 0 .79 0l5.92-3.42v2.5a.07.07 0 0 1-.03.07l-5.04 2.91a4.57 4.57 0 0 1-6.14-1.9zM2.4 9.17a4.55 4.55 0 0 1 2.38-2.02v5.77a.8.8 0 0 0 .4.69l5.92 3.42-2.17 1.25a.07.07 0 0 1-.07 0l-5.04-2.9A4.57 4.57 0 0 1 2.4 9.17zm15.65 3.03-5.92-3.42 2.17-1.25a.07.07 0 0 1 .07 0l5.04 2.9a4.57 4.57 0 0 1-.95 8.23v-5.77a.8.8 0 0 0-.41-.69zm2.52-3.8-4.84-2.8a.78.78 0 0 0-.79 0l-5.92 3.42v-2.5a.07.07 0 0 1 .03-.07l5.04-2.91a4.57 4.57 0 0 1 6.48 4.86zm-8.57-2.31-2.17-1.25a.08.08 0 0 1-.04-.06V1.96a4.57 4.57 0 0 1 7.6-1.39l-.15.08-4.84 2.79a.8.8 0 0 0-.4.68zm-1.07 4.86 2.67-1.54 2.67 1.54v3.09l-2.67 1.54-2.67-1.54z"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'Google Gemini',
+    category: 'ai',
+    svgIcon: (
+      <svg width="34" height="34" viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#4E82EE" />
+            <stop offset="50%" stopColor="#9B72CB" />
+            <stop offset="100%" stopColor="#D96570" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#geminiGrad)" d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'DeepSeek',
+    category: 'ai',
+    svgIcon: (
+      <svg width="34" height="34" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="11" fill="none" stroke="#4E6BFF" strokeWidth="1.8"/>
+        <path fill="#4E6BFF" d="M12 5.5a6.5 6.5 0 0 0-6.5 6.5c0 2.2 1.1 4.14 2.78 5.31.2.14.47.07.57-.15l.6-.1.35.35c.14.14.37.14.51 0l.96-.96c.14-.14.14-.37 0-.51l-.35-.35.1-.6c-.22-.1-.29-.37-.15-.57A4.98 4.98 0 0 1 12 7c2.76 0 5 2.24 5 5 0 1.25-.46 2.39-1.22 3.28l1.08 1.08A6.47 6.47 0 0 0 18.5 12 6.5 6.5 0 0 0 12 5.5z"/>
+        <circle cx="12" cy="12" r="2.2" fill="#00f2fe"/>
+      </svg>
+    ),
+  },
+  {
+    name: 'Qwen',
+    category: 'ai',
+    svgIcon: (
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="#FF6A00">
+        <path d="M12 1.5l8.66 5v10L12 21.5l-8.66-5v-10L12 1.5zm0 2.31L5.34 7.65 12 11.5l6.66-3.85L12 3.81zm-7 5.04v7.3l6.5 3.75V12.6L5 8.85zm14 0l-6.5 3.75v7.3l6.5-3.75v-7.3z"/>
+      </svg>
+    ),
+  },
 ];
 
 export const Skills: React.FC = () => {
@@ -62,9 +113,8 @@ export const Skills: React.FC = () => {
     { id: 'all', label: t.categories.all },
     { id: 'languages', label: t.categories.languages },
     { id: 'frontend', label: t.categories.frontend },
-    { id: 'backend', label: t.categories.backend },
     { id: 'databases', label: t.categories.databases },
-    { id: 'tools', label: t.categories.tools },
+    { id: 'ai', label: t.categories.ai },
   ];
 
   const filteredSkills = SKILLS.filter(
@@ -78,8 +128,7 @@ export const Skills: React.FC = () => {
       </h2>
 
       {t.subtitle && (
-        <p className="skills-subtitle" style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginTop: '-22px', marginBottom: '35px' }}>
-          <i className="fa-brands fa-github" style={{ marginRight: '8px', color: 'var(--accent-color)' }}></i>
+        <p className="skills-subtitle" style={{ color: 'var(--accent-color)', fontSize: '0.92rem', fontFamily: 'monospace', letterSpacing: '1px', marginTop: '-22px', marginBottom: '35px' }}>
           {t.subtitle}
         </p>
       )}
@@ -101,16 +150,17 @@ export const Skills: React.FC = () => {
       <div className="skill-grid" id="skillGrid">
         {filteredSkills.map((skill, idx) => (
           <div key={idx} className="skill-card">
-            <i
-              className={skill.iconClass}
-              style={skill.iconColor ? { color: skill.iconColor } : undefined}
-            ></i>
-            <span className="skill-name">{skill.name}</span>
-            {skill.repoHint && (
-              <span className="skill-hint" style={{ fontSize: '0.68rem', color: 'rgba(255, 255, 255, 0.65)', marginTop: '3px', zIndex: 2, fontFamily: 'monospace' }}>
-                {skill.repoHint}
-              </span>
+            {skill.svgIcon ? (
+              <div className="skill-svg-icon" style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2 }}>
+                {skill.svgIcon}
+              </div>
+            ) : (
+              <i
+                className={skill.iconClass}
+                style={skill.iconColor ? { color: skill.iconColor } : undefined}
+              ></i>
             )}
+            <span className="skill-name">{skill.name}</span>
           </div>
         ))}
       </div>
