@@ -40,7 +40,7 @@ export const PORTFOLIO_DATA = {
     statusBadge: "Available for new opportunities",
     email: "taminhhoang.nk@gmail.com",
     github: "https://github.com/TaHoang715",
-    linkedin: "https://www.linkedin.com/in/ho%C3%A0ng-t%E1%BA%A1-a9a5031b8/",
+    linkedin: "https://www.linkedin.com/in/tahoang715/",
     facebook: "https://www.facebook.com/ta.minh.hoang.293535/",
   },
 

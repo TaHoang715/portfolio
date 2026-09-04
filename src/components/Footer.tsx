@@ -58,7 +58,7 @@ export const Footer: React.FC = () => {
             <i className="fa-solid fa-envelope"></i>
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/tahoang715/"
             target="_blank"
             rel="noopener noreferrer"
             className="social-link"

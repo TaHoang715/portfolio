@@ -150,7 +150,7 @@ export const TRANSLATIONS = {
       items: [
         { name: 'GitHub', action: 'Follow & Star', icon: 'fa-brands fa-github', url: 'https://github.com/TaHoang715', iconColor: '#ffffff' },
         { name: 'Email Direct', action: 'Send Message', icon: 'fa-solid fa-envelope', url: 'mailto:taminhhoang.nk@gmail.com', iconColor: '#00f2fe' },
-        { name: 'LinkedIn', action: 'Connect', icon: 'fa-brands fa-linkedin', url: 'https://linkedin.com', iconColor: '#0077b5' },
+        { name: 'LinkedIn', action: 'Connect', icon: 'fa-brands fa-linkedin', url: 'https://www.linkedin.com/in/tahoang715/', iconColor: '#0077b5' },
         { name: 'Discord / Community', action: 'Chat & Collab', icon: 'fa-brands fa-discord', url: 'https://discord.com', iconColor: '#5865f2' },
       ],
     },
@@ -331,7 +331,7 @@ export const TRANSLATIONS = {
       items: [
         { name: 'GitHub', action: 'Follow & Star', icon: 'fa-brands fa-github', url: 'https://github.com/TaHoang715', iconColor: '#ffffff' },
         { name: 'Email Trực Tiếp', action: 'Gửi tin nhắn', icon: 'fa-solid fa-envelope', url: 'mailto:taminhhoang.nk@gmail.com', iconColor: '#00f2fe' },
-        { name: 'LinkedIn', action: 'Kết nối', icon: 'fa-brands fa-linkedin', url: 'https://linkedin.com', iconColor: '#0077b5' },
+        { name: 'LinkedIn', action: 'Kết nối', icon: 'fa-brands fa-linkedin', url: 'https://www.linkedin.com/in/tahoang715/', iconColor: '#0077b5' },
         { name: 'Discord / Cộng Đồng', action: 'Trò chuyện', icon: 'fa-brands fa-discord', url: 'https://discord.com', iconColor: '#5865f2' },
       ],
     },
