@@ -1,96 +1,114 @@
-import React from 'react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+
+interface TimelineEntry {
+  number: string;
+  role: string;
+  company: string;
+  period: string;
+  bullets: string[];
+  side: 'left' | 'right';
+}
+
+const EXPERIENCES: TimelineEntry[] = [
+  {
+    number: '01',
+    role: 'Operations & Digital Solutions',
+    company: 'TDV Co., Ltd.',
+    period: '2024 – PRESENT (2 YEARS)',
+    bullets: [
+      'Quản trị và vận hành các quy trình số hóa, theo dõi luồng dữ liệu kỹ thuật và bảo đảm hệ thống vận hành liên tục, ổn định.',
+      'Đề xuất và triển khai cải tiến quy trình công việc nội bộ, ứng dụng công cụ tự động hóa để tiết kiệm thời gian xử lý thủ công.',
+    ],
+    side: 'left',
+  },
+  {
+    number: '02',
+    role: 'Software Engineer Intern',
+    company: 'KNS Software',
+    period: '2023 (6 MONTHS)',
+    bullets: [
+      'Trực tiếp tham gia phát triển và bảo trì các module tính năng web và backend theo chuẩn quy trình phần mềm chuyên nghiệp.',
+      'Cộng tác chặt chẽ cùng các senior engineer trong việc review code, xử lý bug, viết tài liệu kỹ thuật và tối ưu trải nghiệm người dùng.',
+    ],
+    side: 'right',
+  },
+  {
+    number: '03',
+    role: 'Independent & Indie Game Creator',
+    company: 'Indie & Side Projects',
+    period: '2022 – PRESENT',
+    bullets: [
+      'Tự tay thiết kế và lập trình các dự án game độc lập (tiêu biểu như DBP Air Defense với hệ thống quỹ đạo vật lý đạn pháo).',
+      'Xây dựng các web app tương tác, tối ưu hiệu năng và chia sẻ mã nguồn mở trên GitHub cá nhân.',
+    ],
+    side: 'left',
+  },
+];
 
 export const Experience: React.FC = () => {
-  const { careers } = PORTFOLIO_DATA;
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const timeline = timelineRef.current;
+      const progress = progressRef.current;
+      if (!timeline || !progress) return;
+
+      const rect = timeline.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const startOffset = windowHeight * 0.5;
+      const scrollDistance = startOffset - rect.top;
+      const progressPercent = Math.max(0, Math.min(100, (scrollDistance / rect.height) * 100));
+
+      progress.style.height = `${progressPercent}%`;
+
+      const dots = timeline.querySelectorAll('.timeline-dot');
+      dots.forEach((dot) => {
+        const dotRect = dot.getBoundingClientRect();
+        const lineBottom = progress.getBoundingClientRect().bottom;
+        if (lineBottom >= dotRect.top) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section id="experience" className="site-section">
-      <div className="bento-container">
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>
-            <Briefcase size={13} /> CAREER TIMELINE
-          </div>
-          <h2 className="section-title-bento">
-            Quá Trình <span style={{ color: 'var(--purple-accent)' }}>Làm Việc</span>
-          </h2>
-          <p className="section-desc" style={{ margin: '0 auto' }}>
-            Hành trình cọ xát thực tế qua các môi trường doanh nghiệp công nghệ, tổ chức giáo dục và dự án tự do.
-          </p>
+    <section className="experience-section" id="experience">
+      <h2 className="section-title">
+        Work Experience - <span className="accent-text">Professional Journey!</span>
+      </h2>
+
+      <div ref={timelineRef} className="timeline">
+        <div className="timeline-line">
+          <div ref={progressRef} className="timeline-progress" />
         </div>
 
-        {/* Timeline Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '24px',
-          }}
-        >
-          {careers.map((c) => (
-            <div key={c.number} className="bento-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.8rem',
-                      color: 'var(--gold)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                    }}
-                  >
-                    <Calendar size={13} /> {c.period}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.78rem',
-                      color: 'var(--text-dim)',
-                    }}
-                  >
-                    #{c.number}
-                  </span>
-                </div>
-
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', marginBottom: '4px' }}>
-                  {c.role}
-                </h3>
-                <h4 style={{ fontSize: '0.98rem', color: 'var(--purple-accent)', fontWeight: 600, marginBottom: '14px' }}>
-                  {c.company}
-                </h4>
-
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '20px' }}>
-                  {c.desc}
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', paddingTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                {c.techs.map((t) => (
-                  <span
-                    key={t}
-                    style={{
-                      fontSize: '0.75rem',
-                      fontFamily: 'var(--font-mono)',
-                      background: 'rgba(255, 255, 255, 0.04)',
-                      padding: '3px 8px',
-                      borderRadius: '4px',
-                      color: '#cbd5e1',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    <CheckCircle2 size={11} color="var(--crimson)" /> {t}
-                  </span>
+        {EXPERIENCES.map((exp, idx) => (
+          <div key={idx} className={`timeline-item ${exp.side}`}>
+            <div className="timeline-number">{exp.number}</div>
+            <div className="timeline-content">
+              <div className="project-tag">{exp.company}</div>
+              <h3>{exp.role}</h3>
+              <div style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.7 }}>
+                {exp.bullets.map((b, bIdx) => (
+                  <p key={bIdx} style={{ marginBottom: '8px' }}>
+                    • {b}
+                  </p>
                 ))}
               </div>
             </div>
-          ))}
-        </div>
+            <div className="timeline-date">{exp.period}</div>
+            <div className="timeline-dot" />
+          </div>
+        ))}
       </div>
     </section>
   );

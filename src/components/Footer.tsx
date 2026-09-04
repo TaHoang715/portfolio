@@ -1,62 +1,80 @@
 import React from 'react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { ArrowUp, Sparkles } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { personal } = PORTFOLIO_DATA;
-
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollTo = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <footer
-      style={{
-        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        background: 'rgba(0, 3, 25, 0.95)',
-        padding: '36px 0',
-        position: 'relative',
-        zIndex: 10,
-      }}
-    >
-      <div className="bento-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-        <div>
-          <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.1rem', color: '#ffffff' }}>
-            {personal.fullName}{' '}
-            <span style={{ color: 'var(--crimson)', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', fontWeight: 600 }}>
-              (@{personal.alias})
-            </span>
-          </div>
-          <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-            © {new Date().getFullYear()} Tạ Minh Hoàng. Powered by React, Three.js & Tailwind.
-          </div>
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-brand">
+          <h2 className="footer-logo">
+            TaHoang<span className="accent-text">715</span>
+          </h2>
+          <p className="footer-tagline">
+            Building reliable software with curiosity, precision & code.
+          </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <span style={{ fontSize: '0.8rem', fontFamily: 'var(--font-mono)', color: 'var(--purple-accent)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Sparkles size={12} /> Hosted on Vercel
-          </span>
+        <ul className="footer-nav-links">
+          <li><a href="#home" onClick={(e) => scrollTo('home', e)}>Home</a></li>
+          <li><a href="#about" onClick={(e) => scrollTo('about', e)}>About</a></li>
+          <li><a href="#experience" onClick={(e) => scrollTo('experience', e)}>Experience</a></li>
+          <li><a href="#projects" onClick={(e) => scrollTo('projects', e)}>Projects</a></li>
+          <li><a href="#skills" onClick={(e) => scrollTo('skills', e)}>Skills</a></li>
+          <li><a href="#certifications" onClick={(e) => scrollTo('certifications', e)}>Certifications</a></li>
+          <li><a href="#profiles" onClick={(e) => scrollTo('profiles', e)}>Profiles</a></li>
+          <li><a href="#contact" onClick={(e) => scrollTo('contact', e)}>Contact</a></li>
+        </ul>
 
-          <button
-            onClick={scrollToTop}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 14px',
-              borderRadius: '9999px',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: '#ffffff',
-              cursor: 'pointer',
-              fontSize: '0.82rem',
-              fontFamily: 'var(--font-heading)',
-              fontWeight: 600,
-            }}
+        <div className="footer-socials">
+          <a
+            href="https://github.com/TaHoang715"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-link"
+            aria-label="GitHub"
           >
-            <ArrowUp size={14} /> Back to Top
-          </button>
+            <i className="fa-brands fa-github"></i>
+          </a>
+          <a
+            href="mailto:taminhhoang715@gmail.com"
+            className="social-link"
+            aria-label="Email"
+          >
+            <i className="fa-solid fa-envelope"></i>
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-link"
+            aria-label="LinkedIn"
+          >
+            <i className="fa-brands fa-linkedin"></i>
+          </a>
         </div>
+      </div>
+
+      <div className="footer-bottom">
+        <p>&copy; {new Date().getFullYear()} Tạ Minh Hoàng (TaHoang715). All rights reserved.</p>
+        <button
+          onClick={scrollToTop}
+          className="back-to-top bounce"
+          aria-label="Về đầu trang"
+          title="Về đầu trang"
+        >
+          <i className="fa-solid fa-arrow-up"></i>
+        </button>
       </div>
     </footer>
   );

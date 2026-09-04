@@ -1,181 +1,97 @@
 import React from 'react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { Github, ExternalLink, Sparkles, Check, Flame } from 'lucide-react';
+
+interface Project {
+  date: string;
+  category: string;
+  title: string;
+  description: string;
+  githubUrl: string;
+  liveUrl?: string;
+}
+
+const PROJECTS: Project[] = [
+  {
+    date: '2024',
+    category: 'Game Development',
+    title: 'DBP Air Defense',
+    description:
+      'Tựa game phòng không lịch sử lấy cảm hứng từ chiến dịch Điện Biên Phủ hào hùng. Tự lập trình cơ chế quỹ đạo vật lý bắn pháo, đường bay tuần tra của phi cơ địch và hệ thống âm thanh chiến đấu sống động.',
+    githubUrl: 'https://github.com/TaHoang715/DBP-Air-Defense',
+  },
+  {
+    date: '2024',
+    category: 'Web Application',
+    title: 'LSD Word Guess',
+    description:
+      'Web mini-game thử thách đoán từ với giao diện trực quan và trải nghiệm mượt mà. Tích hợp hệ thống gợi ý manh mối thông minh, bộ đếm điểm theo lượt và tối ưu phản hồi tương tác thời gian thực.',
+    githubUrl: 'https://github.com/TaHoang715/lsd-word-guess',
+  },
+  {
+    date: '2025',
+    category: 'Frontend Engineering',
+    title: 'Modern Developer Portfolio',
+    description:
+      'Không gian trưng bày năng lực lập trình phong cách DevHQ hiện đại. Tích hợp canvas hạt sao 3D tương tác theo chuột mượt mà, bộ lọc kỹ năng động và tối ưu chuẩn SEO.',
+    githubUrl: 'https://github.com/TaHoang715/portfolio',
+    liveUrl: 'https://github.com/TaHoang715/portfolio',
+  },
+  {
+    date: 'IN PROGRESS',
+    category: 'Indie & AI Experiment',
+    title: 'Indie Mechanics & Game Toolkit',
+    description:
+      'Bộ công cụ thực nghiệm các thuật toán tìm đường trong game (Pathfinding), xử lý trạng thái nhân vật và tích hợp API mô hình tự động hóa sinh dữ liệu hội thoại linh hoạt.',
+    githubUrl: 'https://github.com/TaHoang715',
+  },
+];
 
 export const Projects: React.FC = () => {
-  const { projects } = PORTFOLIO_DATA;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   return (
-    <section id="projects" className="site-section">
-      <div className="bento-container">
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <div className="section-tag" style={{ justifyContent: 'center' }}>
-            <Flame size={13} /> SHOWCASE & REPOSITORIES
-          </div>
-          <h2 className="section-title-bento">
-            Dự Án <span style={{ color: 'var(--purple-accent)' }}>Tiêu Biểu</span>
-          </h2>
-          <p className="section-desc" style={{ margin: '0 auto' }}>
-            Các sản phẩm độc lập được xây dựng với tinh thần chỉn chu về trải nghiệm người dùng,
-            thuật toán va chạm mượt mà và mã nguồn sạch sẽ.
-          </p>
-        </div>
+    <section className="projects-section" id="projects">
+      <h2 className="section-title">
+        Projects Showcase - <span className="accent-text">What I've Built!</span>
+      </h2>
 
-        {/* 3D Pin Cards Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '28px',
-          }}
-        >
-          {projects.map((p) => {
-            const isSecret = p.id === 'flagship-project';
-
-            return (
-              <div key={p.id} className="pin-card-wrapper">
-                <div
-                  className="bento-card pin-card-inner"
-                  style={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    borderTop: `3px solid ${p.accentColor}`,
-                  }}
+      <div className="experience-grid">
+        {PROJECTS.map((proj, idx) => (
+          <div key={idx} className="experience-card" onMouseMove={handleMouseMove}>
+            <div className="experience-date">{proj.date}</div>
+            <div className="project-tag">{proj.category}</div>
+            <h3>{proj.title}</h3>
+            <p>{proj.description}</p>
+            <div className="project-links-wrapper">
+              <a
+                href={proj.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="project-btn"
+              >
+                <i className="fa-brands fa-github"></i>
+                GitHub
+              </a>
+              {proj.liveUrl && (
+                <a
+                  href={proj.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-btn"
                 >
-                  <div>
-                    {/* Top status */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '0.74rem',
-                          padding: '3px 10px',
-                          borderRadius: '9999px',
-                          background: isSecret ? 'rgba(225, 29, 72, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-                          border: `1px solid ${isSecret ? 'rgba(225, 29, 72, 0.4)' : 'rgba(16, 185, 129, 0.4)'}`,
-                          color: isSecret ? '#fda4af' : '#34d399',
-                        }}
-                      >
-                        {isSecret ? 'IN THE LAB' : 'COMPLETED'}
-                      </span>
-
-                      {p.github && (
-                        <a
-                          href={p.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{ color: 'var(--text-muted)', transition: 'color 0.2s', display: 'flex' }}
-                          onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-                          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
-                          aria-label="GitHub Repository"
-                        >
-                          <Github size={20} />
-                        </a>
-                      )}
-                    </div>
-
-                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.45rem', fontWeight: 800, color: '#ffffff', marginBottom: '4px' }}>
-                      {p.title}
-                    </h3>
-                    <div style={{ fontSize: '0.88rem', color: p.accentColor, fontWeight: 600, marginBottom: '12px' }}>
-                      {p.tagline}
-                    </div>
-
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.92rem', lineHeight: 1.6, marginBottom: '18px' }}>
-                      {p.description}
-                    </p>
-
-                    {/* Highlights */}
-                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '20px' }}>
-                      {p.points.map((pt, i) => (
-                        <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.85rem', color: '#e2e8f0' }}>
-                          <Check size={14} color={p.accentColor} style={{ marginTop: '3px', flexShrink: 0 }} />
-                          <span>{pt}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Bottom Tags & Button */}
-                  <div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '18px', paddingTop: '14px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                      {p.tags.map((t) => (
-                        <span
-                          key={t}
-                          style={{
-                            fontSize: '0.74rem',
-                            fontFamily: 'var(--font-mono)',
-                            background: 'rgba(255, 255, 255, 0.05)',
-                            padding: '2px 8px',
-                            borderRadius: '4px',
-                            color: '#cbd5e1',
-                          }}
-                        >
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
-
-                    {p.github ? (
-                      <a
-                        href={p.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '8px',
-                          padding: '10px 16px',
-                          borderRadius: '10px',
-                          background: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)',
-                          color: '#ffffff',
-                          textDecoration: 'none',
-                          fontSize: '0.88rem',
-                          fontFamily: 'var(--font-heading)',
-                          fontWeight: 600,
-                          transition: 'all 0.2s',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                        }}
-                      >
-                        <Github size={16} /> Xem Mã Nguồn <ExternalLink size={13} />
-                      </a>
-                    ) : (
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '8px',
-                          padding: '10px 16px',
-                          borderRadius: '10px',
-                          background: 'rgba(255, 255, 255, 0.03)',
-                          border: '1px solid rgba(255, 255, 255, 0.06)',
-                          color: 'var(--gold)',
-                          fontSize: '0.85rem',
-                          fontFamily: 'var(--font-mono)',
-                        }}
-                      >
-                        <Sparkles size={14} /> Dự Án Sắp Ra Mắt
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                  <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                  Source Repo
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

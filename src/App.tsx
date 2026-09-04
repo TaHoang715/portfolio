@@ -1,34 +1,39 @@
 import React from 'react';
-import { BackgroundCosmos } from './components/canvas/BackgroundCosmos';
+import { BackgroundCanvas } from './components/BackgroundCanvas';
+import { CustomCursor, ScrollProgress } from './components/InteractiveControls';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { BentoGrid } from './components/BentoGrid';
-import { TechStack } from './components/TechStack';
-import { Projects } from './components/Projects';
+import { About } from './components/About';
 import { Experience } from './components/Experience';
+import { Projects } from './components/Projects';
+import { Skills } from './components/Skills';
+import { Certifications } from './components/Certifications';
+import { Profiles } from './components/Profiles';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
 export const App: React.FC = () => {
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', background: '#000319', overflow: 'hidden' }}>
-      {/* 3D Cosmos Particles Background */}
-      <BackgroundCosmos />
+    <div className="portfolio-app">
+      {/* 3D Starfield Background Canvas */}
+      <BackgroundCanvas />
 
-      {/* Floating Navigation Bar */}
+      {/* Custom Mouse Cursor & Top Scroll Progress */}
+      <CustomCursor />
+      <ScrollProgress />
+
+      {/* Floating Pill Navbar */}
       <Navbar />
 
-      {/* Main Sections */}
-      <main style={{ position: 'relative', zIndex: 2 }}>
-        <Hero />
-        <BentoGrid />
-        <TechStack />
-        <Projects />
-        <Experience />
-        <Contact />
-      </main>
-
-      {/* Footer */}
+      {/* Main Portfolio Sections */}
+      <Hero />
+      <About />
+      <Experience />
+      <Projects />
+      <Skills />
+      <Certifications />
+      <Profiles />
+      <Contact />
       <Footer />
     </div>
   );
