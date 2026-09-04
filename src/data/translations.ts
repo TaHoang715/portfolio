@@ -105,11 +105,12 @@ export const TRANSLATIONS = {
     skills: {
       heading: 'Technical Skills',
       highlight: 'Core Expertise!',
+      subtitle: 'Curated directly from hands-on repositories & projects on GitHub @TaHoang715',
       categories: {
         all: 'All',
         languages: 'Languages',
-        frontend: 'Frontend',
-        backend: 'Backend',
+        frontend: 'Frontend & Mobile',
+        backend: 'Backend & APIs',
         databases: 'Databases',
         tools: 'Tools & DevOps',
       },
@@ -127,11 +128,11 @@ export const TRANSLATIONS = {
           icon: 'fa-solid fa-graduation-cap',
         },
         {
-          badge: 'INTERNATIONAL ENGLISH PROFICIENCY',
+          badge: 'INTERNATIONAL PROFICIENCY',
           title: 'CEFR B2 English Certificate',
-          institution: 'IELTS 5.5 Equivalent (March 2023)',
+          institution: 'International English Certification',
           description:
-            'Demonstrated ability to comprehend complex technical documentation, write clear specifications, and communicate effectively with global development communities.',
+            'Certified CEFR B2 proficiency. Demonstrated ability to comprehend complex technical documentation, write clear specifications, and communicate effectively with global development teams.',
           icon: 'fa-solid fa-language',
         },
         {
@@ -286,11 +287,12 @@ export const TRANSLATIONS = {
     skills: {
       heading: 'Kỹ năng chuyên môn',
       highlight: 'Công nghệ cốt lõi!',
+      subtitle: 'Đúc kết trực tiếp từ các dự án và mã nguồn thực tế trên GitHub @TaHoang715',
       categories: {
         all: 'Tất cả',
         languages: 'Ngôn ngữ',
-        frontend: 'Frontend',
-        backend: 'Backend',
+        frontend: 'Frontend & Mobile',
+        backend: 'Backend & APIs',
         databases: 'Cơ sở dữ liệu',
         tools: 'Công cụ & DevOps',
       },
@@ -308,11 +310,11 @@ export const TRANSLATIONS = {
           icon: 'fa-solid fa-graduation-cap',
         },
         {
-          badge: 'TIẾNG ANH CHUẨN QUỐC TẾ',
+          badge: 'CHUẨN QUỐC TẾ',
           title: 'Chứng Chỉ Tiếng Anh CEFR B2',
-          institution: 'IELTS 5.5 (March 2023)',
+          institution: 'Khảo Thí Chuẩn Quốc Tế (Certified)',
           description:
-            'Năng lực đọc hiểu tài liệu kỹ thuật chuyên sâu, viết tài liệu dự án và giao tiếp chuyên nghiệp với cộng đồng lập trình viên quốc tế.',
+            'Chứng nhận năng lực Anh ngữ bậc B2 theo khung tham chiếu Châu Âu. Đọc hiểu tài liệu kỹ thuật chuyên sâu, viết tài liệu dự án và giao tiếp tự tin trong môi trường làm việc quốc tế.',
           icon: 'fa-solid fa-language',
         },
         {
