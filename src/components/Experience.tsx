@@ -1,51 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-
-interface TimelineEntry {
-  number: string;
-  role: string;
-  company: string;
-  period: string;
-  bullets: string[];
-  side: 'left' | 'right';
-}
-
-const EXPERIENCES: TimelineEntry[] = [
-  {
-    number: '01',
-    role: 'Operations & Digital Solutions',
-    company: 'TDV Co., Ltd.',
-    period: '2024 – PRESENT (2 YEARS)',
-    bullets: [
-      'Quản trị và vận hành các quy trình số hóa, theo dõi luồng dữ liệu kỹ thuật và bảo đảm hệ thống vận hành liên tục, ổn định.',
-      'Đề xuất và triển khai cải tiến quy trình công việc nội bộ, ứng dụng công cụ tự động hóa để tiết kiệm thời gian xử lý thủ công.',
-    ],
-    side: 'left',
-  },
-  {
-    number: '02',
-    role: 'Software Engineer Intern',
-    company: 'KNS Software',
-    period: '2023 (6 MONTHS)',
-    bullets: [
-      'Trực tiếp tham gia phát triển và bảo trì các module tính năng web và backend theo chuẩn quy trình phần mềm chuyên nghiệp.',
-      'Cộng tác chặt chẽ cùng các senior engineer trong việc review code, xử lý bug, viết tài liệu kỹ thuật và tối ưu trải nghiệm người dùng.',
-    ],
-    side: 'right',
-  },
-  {
-    number: '03',
-    role: 'Independent & Indie Game Creator',
-    company: 'Indie & Side Projects',
-    period: '2022 – PRESENT',
-    bullets: [
-      'Tự tay thiết kế và lập trình các dự án game độc lập (tiêu biểu như DBP Air Defense với hệ thống quỹ đạo vật lý đạn pháo).',
-      'Xây dựng các web app tương tác, tối ưu hiệu năng và chia sẻ mã nguồn mở trên GitHub cá nhân.',
-    ],
-    side: 'left',
-  },
-];
+import { usePortfolio } from '../context/PortfolioContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const Experience: React.FC = () => {
+  const { lang } = usePortfolio();
+  const t = TRANSLATIONS[lang].experience;
+
   const timelineRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +43,7 @@ export const Experience: React.FC = () => {
   return (
     <section className="experience-section" id="experience">
       <h2 className="section-title">
-        Work Experience - <span className="accent-text">Professional Journey!</span>
+        {t.heading} - <span className="accent-text">{t.highlight}</span>
       </h2>
 
       <div ref={timelineRef} className="timeline">
@@ -91,24 +51,27 @@ export const Experience: React.FC = () => {
           <div ref={progressRef} className="timeline-progress" />
         </div>
 
-        {EXPERIENCES.map((exp, idx) => (
-          <div key={idx} className={`timeline-item ${exp.side}`}>
-            <div className="timeline-number">{exp.number}</div>
-            <div className="timeline-content">
-              <div className="project-tag">{exp.company}</div>
-              <h3>{exp.role}</h3>
-              <div style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.7 }}>
-                {exp.bullets.map((b, bIdx) => (
-                  <p key={bIdx} style={{ marginBottom: '8px' }}>
-                    • {b}
-                  </p>
-                ))}
+        {t.items.map((exp, idx) => {
+          const side = idx % 2 === 0 ? 'left' : 'right';
+          return (
+            <div key={idx} className={`timeline-item ${side}`}>
+              <div className="timeline-number">{exp.number}</div>
+              <div className="timeline-content">
+                <div className="project-tag">{exp.company}</div>
+                <h3>{exp.role}</h3>
+                <div style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: 1.7 }}>
+                  {exp.bullets.map((b, bIdx) => (
+                    <p key={bIdx} style={{ marginBottom: '8px' }}>
+                      • {b}
+                    </p>
+                  ))}
+                </div>
               </div>
+              <div className="timeline-date">{exp.period}</div>
+              <div className="timeline-dot" />
             </div>
-            <div className="timeline-date">{exp.period}</div>
-            <div className="timeline-dot" />
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { usePortfolio } from '../context/PortfolioContext';
+import { TRANSLATIONS } from '../data/translations';
 
 type SkillCategory = 'all' | 'languages' | 'frontend' | 'backend' | 'databases' | 'tools';
 
@@ -44,17 +46,19 @@ const SKILLS: Skill[] = [
   { name: 'Vercel', category: 'tools', iconClass: 'devicon-vercel-original' },
 ];
 
-const CATEGORIES: { id: SkillCategory; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'languages', label: 'Languages' },
-  { id: 'frontend', label: 'Frontend' },
-  { id: 'backend', label: 'Backend' },
-  { id: 'databases', label: 'Databases' },
-  { id: 'tools', label: 'Tools & DevOps' },
-];
-
 export const Skills: React.FC = () => {
+  const { lang } = usePortfolio();
+  const t = TRANSLATIONS[lang].skills;
   const [activeFilter, setActiveFilter] = useState<SkillCategory>('all');
+
+  const categories: { id: SkillCategory; label: string }[] = [
+    { id: 'all', label: t.categories.all },
+    { id: 'languages', label: t.categories.languages },
+    { id: 'frontend', label: t.categories.frontend },
+    { id: 'backend', label: t.categories.backend },
+    { id: 'databases', label: t.categories.databases },
+    { id: 'tools', label: t.categories.tools },
+  ];
 
   const filteredSkills = SKILLS.filter(
     (skill) => activeFilter === 'all' || skill.category === activeFilter
@@ -63,12 +67,12 @@ export const Skills: React.FC = () => {
   return (
     <section className="skills-section" id="skills">
       <h2 className="section-title">
-        Technical Skills - <span className="accent-text">Core Expertise!</span>
+        {t.heading} - <span className="accent-text">{t.highlight}</span>
       </h2>
 
       {/* Filter Buttons */}
       <div className="skill-filters" id="skillFilters">
-        {CATEGORIES.map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setActiveFilter(cat.id)}

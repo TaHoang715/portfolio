@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { usePortfolio } from '../context/PortfolioContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const Contact: React.FC = () => {
+  const { lang } = usePortfolio();
+  const t = TRANSLATIONS[lang].contact;
+
   const [copied, setCopied] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,31 +46,28 @@ export const Contact: React.FC = () => {
       <div className="contact-container">
         <div>
           <h2 className="section-title">
-            Get In Touch - <span className="accent-text">Let's Talk!</span>
+            {t.heading} - <span className="accent-text">{t.highlight}</span>
           </h2>
-          <h4 className="contact-note">
-            Bạn đang có dự án cần hợp tác, cơ hội việc làm hay đơn giản chỉ muốn trao đổi về công nghệ?
-            Hộp thư của mình luôn rộng mở chào đón!
-          </h4>
+          <h4 className="contact-note">{t.note}</h4>
         </div>
 
         <div className="contact-card">
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <input type="text" id="name" name="name" required placeholder=" " autoComplete="off" />
-              <label htmlFor="name">Họ và tên của bạn</label>
+              <label htmlFor="name">{t.nameLabel}</label>
               <i className="fa-solid fa-user input-icon"></i>
             </div>
 
             <div className="form-group">
               <input type="email" id="email" name="email" required placeholder=" " autoComplete="off" />
-              <label htmlFor="email">Địa chỉ Email</label>
+              <label htmlFor="email">{t.emailLabel}</label>
               <i className="fa-solid fa-envelope input-icon"></i>
             </div>
 
             <div className="form-group">
               <textarea id="message" name="message" rows={4} required placeholder=" "></textarea>
-              <label htmlFor="message">Nội dung tin nhắn</label>
+              <label htmlFor="message">{t.messageLabel}</label>
               <i className="fa-solid fa-comment input-icon"></i>
             </div>
 
@@ -76,17 +78,17 @@ export const Contact: React.FC = () => {
             >
               {isSubmitting ? (
                 <>
-                  <span>Đang gửi...</span>
+                  <span>{t.btnSending}</span>
                   <i className="fa-solid fa-spinner fa-spin"></i>
                 </>
               ) : formSubmitted ? (
                 <>
-                  <span>Đã gửi thành công!</span>
+                  <span>{t.btnSent}</span>
                   <i className="fa-solid fa-check"></i>
                 </>
               ) : (
                 <>
-                  <span>Gửi tin nhắn</span>
+                  <span>{t.btnSubmit}</span>
                   <i className="fa-solid fa-paper-plane"></i>
                 </>
               )}
@@ -96,7 +98,7 @@ export const Contact: React.FC = () => {
           {/* Quick email copy */}
           <div className="quick-email-box">
             <span className="quick-email-text">
-              Hoặc gửi thư trực tiếp đến: <strong>{email}</strong>
+              {t.directEmail} <strong>{email}</strong>
             </span>
             <button
               type="button"
@@ -104,7 +106,7 @@ export const Contact: React.FC = () => {
               className="btn-copy-email"
             >
               <i className={`fa-solid ${copied ? 'fa-check' : 'fa-copy'}`}></i>
-              <span>{copied ? 'Đã sao chép email!' : 'Sao chép Email'}</span>
+              <span>{copied ? t.btnCopied : t.btnCopy}</span>
             </button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { PortfolioProvider } from './context/PortfolioContext';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { CustomCursor, ScrollProgress } from './components/InteractiveControls';
 import { Navbar } from './components/Navbar';
@@ -11,31 +12,37 @@ import { Certifications } from './components/Certifications';
 import { Profiles } from './components/Profiles';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ThemeWidget } from './components/ThemeWidget';
 
 export const App: React.FC = () => {
   return (
-    <div className="portfolio-app">
-      {/* 3D Starfield Background Canvas */}
-      <BackgroundCanvas />
+    <PortfolioProvider>
+      <div className="portfolio-app">
+        {/* Dynamic Background Canvas (4 switchable modes) */}
+        <BackgroundCanvas />
 
-      {/* Custom Mouse Cursor & Top Scroll Progress */}
-      <CustomCursor />
-      <ScrollProgress />
+        {/* Custom Mouse Cursor & Top Scroll Progress */}
+        <CustomCursor />
+        <ScrollProgress />
 
-      {/* Floating Pill Navbar */}
-      <Navbar />
+        {/* Smart Floating Pill Navbar */}
+        <Navbar />
 
-      {/* Main Portfolio Sections */}
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Certifications />
-      <Profiles />
-      <Contact />
-      <Footer />
-    </div>
+        {/* Main Portfolio Sections */}
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Certifications />
+        <Profiles />
+        <Contact />
+        <Footer />
+
+        {/* Live Theme & Language Controller Widget */}
+        <ThemeWidget />
+      </div>
+    </PortfolioProvider>
   );
 };
 

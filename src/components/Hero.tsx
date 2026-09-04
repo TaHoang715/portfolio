@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
-
-const TYPING_WORDS = ['DEVELOPER', 'PROGRAMMER', 'INDIE CREATOR', 'ENGINEER', 'PROBLEM SOLVER'];
+import { usePortfolio } from '../context/PortfolioContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const Hero: React.FC = () => {
+  const { lang } = usePortfolio();
+  const t = TRANSLATIONS[lang].hero;
+
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const words = t.typingWords;
+
   useEffect(() => {
-    const currentWord = TYPING_WORDS[wordIndex];
+    setWordIndex(0);
+    setCharIndex(0);
+    setIsDeleting(false);
+  }, [lang]);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex % words.length];
     let timer: NodeJS.Timeout;
 
     if (isDeleting) {
@@ -16,7 +27,7 @@ export const Hero: React.FC = () => {
         timer = setTimeout(() => setCharIndex((prev) => prev - 1), 60);
       } else {
         setIsDeleting(false);
-        setWordIndex((prev) => (prev + 1) % TYPING_WORDS.length);
+        setWordIndex((prev) => (prev + 1) % words.length);
         timer = setTimeout(() => {}, 400);
       }
     } else {
@@ -28,9 +39,10 @@ export const Hero: React.FC = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, wordIndex]);
+  }, [charIndex, isDeleting, wordIndex, words]);
 
-  const currentText = TYPING_WORDS[wordIndex].substring(0, charIndex);
+  const currentWord = words[wordIndex % words.length];
+  const currentText = currentWord.substring(0, charIndex);
 
   const scrollToSection = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -54,7 +66,7 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="content-wrapper">
-        <h2 className="sub-title">Woah! You Landed on the Portfolio Website of The</h2>
+        <h2 className="sub-title">{t.subtitle}</h2>
 
         <h1 className="sr-only">Tạ Minh Hoàng - Software Developer Portfolio</h1>
         <h2 className="main-title">
@@ -73,7 +85,7 @@ export const Hero: React.FC = () => {
           />
         </h2>
 
-        <h5 className="year">Tạ Minh Hoàng (TaHoang715) | Software Engineering Graduate</h5>
+        <h5 className="year">{t.titleSuffix}</h5>
 
         <div className="hero-buttons">
           <a
@@ -82,7 +94,7 @@ export const Hero: React.FC = () => {
             className="btn-resume"
           >
             <i className="fa-solid fa-paper-plane" style={{ fontSize: '0.85rem' }}></i>
-            Let's Connect
+            {t.btnConnect}
           </a>
           <a
             href="#projects"
@@ -90,7 +102,7 @@ export const Hero: React.FC = () => {
             className="btn-resume"
           >
             <i className="fa-solid fa-code" style={{ fontSize: '0.85rem' }}></i>
-            View Projects
+            {t.btnProjects}
           </a>
         </div>
       </div>

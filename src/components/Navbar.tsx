@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-interface NavItem {
-  id: string;
-  label: string;
-  icon: string;
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { id: 'home', label: 'Home', icon: 'fa-solid fa-house' },
-  { id: 'about', label: 'About', icon: 'fa-solid fa-user' },
-  { id: 'experience', label: 'Experience', icon: 'fa-solid fa-briefcase' },
-  { id: 'projects', label: 'Projects', icon: 'fa-solid fa-code' },
-  { id: 'skills', label: 'Skills', icon: 'fa-solid fa-layer-group' },
-  { id: 'certifications', label: 'Certs', icon: 'fa-solid fa-award' },
-  { id: 'profiles', label: 'Profiles', icon: 'fa-solid fa-globe' },
-  { id: 'contact', label: 'Contact', icon: 'fa-solid fa-envelope' },
-];
+import { usePortfolio } from '../context/PortfolioContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const Navbar: React.FC = () => {
+  const { lang, setLang } = usePortfolio();
+  const t = TRANSLATIONS[lang].nav;
+
+  const NAV_ITEMS = [
+    { id: 'home', label: t.home, icon: 'fa-solid fa-house' },
+    { id: 'about', label: t.about, icon: 'fa-solid fa-user' },
+    { id: 'experience', label: t.experience, icon: 'fa-solid fa-briefcase' },
+    { id: 'projects', label: t.projects, icon: 'fa-solid fa-code' },
+    { id: 'skills', label: t.skills, icon: 'fa-solid fa-layer-group' },
+    { id: 'certifications', label: t.certifications, icon: 'fa-solid fa-award' },
+    { id: 'profiles', label: t.profiles, icon: 'fa-solid fa-globe' },
+    { id: 'contact', label: t.contact, icon: 'fa-solid fa-envelope' },
+  ];
+
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,27 +26,20 @@ export const Navbar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Determine scrolled state (for compact padding & deeper blur)
       setIsScrolled(currentScrollY > 80);
 
-      // Scroll direction logic:
-      // When scrolling down, hide navbar. When scrolling up, reveal navbar immediately!
       if (currentScrollY <= 60) {
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY.current + 8) {
-        // Scrolling DOWN
         if (!isHoveredNearTop.current) {
           setIsVisible(false);
         }
       } else if (currentScrollY < lastScrollY.current - 8) {
-        // Scrolling UP
         setIsVisible(true);
       }
 
       lastScrollY.current = currentScrollY;
 
-      // Active Section Spy
       const scrollPosition = currentScrollY + window.innerHeight * 0.35;
       for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
         const item = NAV_ITEMS[i];
@@ -64,7 +56,6 @@ export const Navbar: React.FC = () => {
       }
     };
 
-    // Hover near top reveals navbar even when scrolled down
     const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY <= 50) {
         isHoveredNearTop.current = true;
@@ -81,7 +72,7 @@ export const Navbar: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [lang]);
 
   const scrollTo = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -117,6 +108,15 @@ export const Navbar: React.FC = () => {
               </a>
             );
           })}
+
+          {/* Quick Lang Switcher inside pill */}
+          <button
+            onClick={() => setLang(lang === 'en' ? 'vi' : 'en')}
+            className="pill-lang-btn"
+            title={`Chuyển sang ${lang === 'en' ? 'Tiếng Việt' : 'English'}`}
+          >
+            {lang === 'en' ? 'VI' : 'EN'}
+          </button>
         </div>
       </nav>
     </header>
