@@ -46,6 +46,8 @@ const SKILLS: Skill[] = [
   { name: 'Git', category: 'databases', iconClass: 'devicon-git-plain colored' },
   { name: 'Postman', category: 'databases', iconClass: 'devicon-postman-plain colored' },
   { name: 'Swagger', category: 'databases', iconClass: 'devicon-swagger-plain colored' },
+  { name: 'Firebase', category: 'databases', iconClass: 'devicon-firebase-plain colored' },
+  { name: 'Supabase', category: 'databases', iconClass: 'devicon-supabase-plain colored' },
 
   // 4. AI Coding Tools (Exclusively Claude, GPT, Gemini, DeepSeek, Qwen)
   {

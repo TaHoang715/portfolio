@@ -51,8 +51,8 @@ export const PORTFOLIO_DATA = {
     englishLevels: [
       {
         badge: "CEFR B2",
-        title: "IELTS 5.5 Equivalent (B2)",
-        detail: "Kỳ thi thực hiện cách đây 3 năm, giao tiếp và đọc hiểu tài liệu kỹ thuật thành thạo.",
+        title: "IELTS Certificate (CEFR B2 Level)",
+        detail: "Chứng chỉ tiếng Anh IELTS chuẩn quốc tế CEFR B2, giao tiếp và đọc hiểu tài liệu kỹ thuật thành thạo.",
       },
       {
         badge: "CAMBRIDGE",

@@ -128,10 +128,10 @@ export const TRANSLATIONS = {
         },
         {
           badge: 'INTERNATIONAL PROFICIENCY',
-          title: 'CEFR B2 English Certificate',
-          institution: 'International English Certification',
+          title: 'IELTS English Certificate',
+          institution: 'International English Certification (CEFR B2)',
           description:
-            'Certified CEFR B2 proficiency. Demonstrated ability to comprehend complex technical documentation, write clear specifications, and communicate effectively with global development teams.',
+            'Certified IELTS English proficiency at CEFR B2 level. Demonstrated ability to comprehend complex technical documentation, write clear specifications, and communicate effectively with global development teams.',
           icon: 'fa-solid fa-language',
         },
         {
@@ -149,7 +149,7 @@ export const TRANSLATIONS = {
       highlight: 'Dev Network!',
       items: [
         { name: 'GitHub', action: 'Follow & Star', icon: 'fa-brands fa-github', url: 'https://github.com/TaHoang715', iconColor: '#ffffff' },
-        { name: 'Email Direct', action: 'Send Message', icon: 'fa-solid fa-envelope', url: 'mailto:taminhhoang715@gmail.com', iconColor: '#00f2fe' },
+        { name: 'Email Direct', action: 'Send Message', icon: 'fa-solid fa-envelope', url: 'mailto:taminhhoang.nk@gmail.com', iconColor: '#00f2fe' },
         { name: 'LinkedIn', action: 'Connect', icon: 'fa-brands fa-linkedin', url: 'https://linkedin.com', iconColor: '#0077b5' },
         { name: 'Discord / Community', action: 'Chat & Collab', icon: 'fa-brands fa-discord', url: 'https://discord.com', iconColor: '#5865f2' },
       ],
@@ -309,10 +309,10 @@ export const TRANSLATIONS = {
         },
         {
           badge: 'CHUẨN QUỐC TẾ',
-          title: 'Chứng Chỉ Tiếng Anh CEFR B2',
-          institution: 'Khảo Thí Chuẩn Quốc Tế (Certified)',
+          title: 'Chứng Chỉ Tiếng Anh IELTS (CEFR B2)',
+          institution: 'Khảo Thí Chuẩn Quốc Tế IELTS • CEFR B2',
           description:
-            'Chứng nhận năng lực Anh ngữ bậc B2 theo khung tham chiếu Châu Âu. Đọc hiểu tài liệu kỹ thuật chuyên sâu, viết tài liệu dự án và giao tiếp tự tin trong môi trường làm việc quốc tế.',
+            'Chứng chỉ tiếng Anh IELTS đạt trình độ chuẩn quốc tế CEFR B2. Đọc hiểu tài liệu kỹ thuật chuyên sâu, viết tài liệu dự án và giao tiếp tự tin trong môi trường làm việc toàn cầu.',
           icon: 'fa-solid fa-language',
         },
         {
@@ -330,7 +330,7 @@ export const TRANSLATIONS = {
       highlight: 'Dev Network!',
       items: [
         { name: 'GitHub', action: 'Follow & Star', icon: 'fa-brands fa-github', url: 'https://github.com/TaHoang715', iconColor: '#ffffff' },
-        { name: 'Email Trực Tiếp', action: 'Gửi tin nhắn', icon: 'fa-solid fa-envelope', url: 'mailto:taminhhoang715@gmail.com', iconColor: '#00f2fe' },
+        { name: 'Email Trực Tiếp', action: 'Gửi tin nhắn', icon: 'fa-solid fa-envelope', url: 'mailto:taminhhoang.nk@gmail.com', iconColor: '#00f2fe' },
         { name: 'LinkedIn', action: 'Kết nối', icon: 'fa-brands fa-linkedin', url: 'https://linkedin.com', iconColor: '#0077b5' },
         { name: 'Discord / Cộng Đồng', action: 'Trò chuyện', icon: 'fa-brands fa-discord', url: 'https://discord.com', iconColor: '#5865f2' },
       ],

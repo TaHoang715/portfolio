@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
             <i className="fa-brands fa-github"></i>
           </a>
           <a
-            href="mailto:taminhhoang715@gmail.com"
+            href="mailto:taminhhoang.nk@gmail.com"
             className="social-link"
             aria-label="Email"
           >
