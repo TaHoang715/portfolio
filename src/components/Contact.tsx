@@ -44,8 +44,8 @@ export const Contact: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      // Send real email via FormSubmit AJAX service straight to taminhhoang.nk@gmail.com
-      const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+      // Send real email via /api/contact (handled by Vite dev middleware locally & Vercel serverless in prod)
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,15 +55,12 @@ export const Contact: React.FC = () => {
           name: name.trim(),
           email: senderEmail.trim(),
           message: message.trim(),
-          _subject: `[Portfolio TaHoang715] Tin nhắn mới từ ${name.trim()}`,
-          _template: 'table',
-          _captcha: 'false',
         }),
       });
 
       const data = await response.json();
 
-      if (response.ok && data.success !== 'false') {
+      if (response.ok && data.success) {
         setFormSubmitted(true);
         setName('');
         setSenderEmail('');
@@ -78,7 +75,7 @@ export const Contact: React.FC = () => {
 
         setTimeout(() => setFormSubmitted(false), 6000);
       } else {
-        throw new Error(data.message || 'Lỗi gửi tin nhắn');
+        throw new Error(data.error || data.message || 'Lỗi gửi tin nhắn');
       }
     } catch (err) {
       console.warn('Direct API submission failed, providing instant mailto alternative:', err);
