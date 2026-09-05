@@ -171,8 +171,8 @@ export const TRANSLATIONS = {
       btnCopy: 'Copy Email',
       btnCopied: 'Copied to Clipboard!',
       sendSuccess: 'Thank you! Your message has been sent directly to taminhhoang.nk@gmail.com.',
-      sendError: 'Could not send automatically. Click "Open in Mail App" to send directly!',
-      btnMailto: 'Open in Mail App',
+      sendError: 'Could not send message automatically. Please try again or email directly to taminhhoang.nk@gmail.com!',
+      btnMailto: 'Direct Email',
     },
     footer: {
       tagline: 'Building reliable software with curiosity, precision & code.',
@@ -358,8 +358,8 @@ export const TRANSLATIONS = {
       btnCopy: 'Sao chép Email',
       btnCopied: 'Đã sao chép email!',
       sendSuccess: 'Cảm ơn bạn! Tin nhắn đã được gửi thẳng tới taminhhoang.nk@gmail.com.',
-      sendError: 'Không thể gửi tự động. Hãy bấm "Mở ứng dụng Mail" để gửi trực tiếp nhé!',
-      btnMailto: 'Mở ứng dụng Mail',
+      sendError: 'Không thể gửi tin nhắn tự động. Vui lòng thử lại hoặc gửi trực tiếp qua email taminhhoang.nk@gmail.com!',
+      btnMailto: 'Gửi Email trực tiếp',
     },
     footer: {
       tagline: 'Phát triển phần mềm chất lượng với tinh thần tò mò, chỉn chu và đam mê.',

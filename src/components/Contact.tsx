@@ -30,16 +30,6 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleOpenMailto = () => {
-    const subject = encodeURIComponent(`[Portfolio TaHoang715] Liên hệ từ ${name || 'Khách truy cập'}`);
-    const body = encodeURIComponent(
-      `Chào Hoàng,\n\n${message || 'Tôi muốn kết nối và trao đổi công việc cùng bạn.'}\n\n---\nTừ: ${name || 'Ẩn danh'} (${senderEmail || 'Không để lại email'})`
-    );
-    // Mở trực tiếp giao diện Soạn thư của Gmail trên web (hoạt động 100% trên mọi máy mà không cần cài app Outlook)
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${subject}&body=${body}`;
-    window.open(gmailUrl, '_blank');
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -166,25 +156,17 @@ export const Contact: React.FC = () => {
               </div>
             )}
 
-            {/* Error Feedback Alert with 1-click fallback */}
+            {/* Error Feedback Alert */}
             {errorMessage && (
               <div className="contact-alert error-alert" role="alert">
                 <i className="fa-solid fa-triangle-exclamation"></i>
                 <div className="error-alert-content">
                   <p>{errorMessage}</p>
-                  <button
-                    type="button"
-                    onClick={handleOpenMailto}
-                    className="btn-alert-fallback"
-                  >
-                    <i className="fa-solid fa-paper-plane"></i>
-                    <span>{t.btnMailto}</span>
-                  </button>
                 </div>
               </div>
             )}
 
-            {/* Actions: Submit button & Mailto shortcut */}
+            {/* Actions: Submit button */}
             <div className="form-actions">
               <button
                 type="submit"
@@ -207,16 +189,6 @@ export const Contact: React.FC = () => {
                     <i className="fa-solid fa-paper-plane"></i>
                   </>
                 )}
-              </button>
-
-              <button
-                type="button"
-                onClick={handleOpenMailto}
-                className="btn-mailto-link"
-                title="Mở trong trình duyệt hoặc ứng dụng mail cá nhân"
-              >
-                <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                <span>{t.btnMailto}</span>
               </button>
             </div>
           </form>
