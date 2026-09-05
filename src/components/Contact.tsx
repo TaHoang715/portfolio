@@ -35,7 +35,9 @@ export const Contact: React.FC = () => {
     const body = encodeURIComponent(
       `Chào Hoàng,\n\n${message || 'Tôi muốn kết nối và trao đổi công việc cùng bạn.'}\n\n---\nTừ: ${name || 'Ẩn danh'} (${senderEmail || 'Không để lại email'})`
     );
-    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
+    // Mở trực tiếp giao diện Soạn thư của Gmail trên web (hoạt động 100% trên mọi máy mà không cần cài app Outlook)
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${subject}&body=${body}`;
+    window.open(gmailUrl, '_blank');
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
